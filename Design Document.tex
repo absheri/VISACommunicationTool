@@ -1,0 +1,500 @@
+\documentclass [10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{authblk}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{tabularx,ragged2e,booktabs,caption}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+\usepackage{imakeidx}
+\usepackage{graphicx}
+
+\title{VISA Communication Tool Software Design Document}
+\author[1]{Chenliang Wang}
+\author[1]{Wenbo Hou}
+\author[1]{Lucien Armand Tamno}
+\affil[1]{Oregon State University}
+\date {December 1, 2016}
+\renewcommand\Authands{ and }
+
+\begin{document}
+\begin{titlepage}
+\maketitle
+\begin{abstract}
+The content of this document describes the organization for the software design description pertaining to VISA communication tool (VCT) as can be shared, used to convey designed information to its stakeholders. This software design description (SDD) gives a clear picture on how VCT will be implemented by presenting designs from particular viewpoints.   
+\end{abstract}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+\section{Introduction}
+\subsection{Scope}  
+After getting started on the technology review which is the introductory part of the current designed document, the bulk of work performed in this document by the develop team is to elaborate on each viewpoint of the VCT software. The process will consist of  designing each part of the VCT after the guidelines required by the summary design viewpoints table on page 13 of the IEEE Std  1016\texttrademark-2009 document.In this current document, each entry from the IEEE's table will be matching each section of this design document.
+\subsection{Purpose}
+This VCT design document aims to provide stakeholders enough information on what VCT is like, how the software is implemented, the framework of its implementation, resources, as well as momentum among the various parts of the system.
+\subsection{Context}
+This document contains all necessary information related to the design of VCT. The developing team will identify stakeholders and their concerns in the beginning of this document. Then, developers will show their designs for specific requirements from a proper viewpoint. Stakeholders' concerns will be addressed in each design view.   
+\subsection{Summary}
+In this document, all three team members show designs for requirements they chose in the technology review. The analysis of stakeholders and technologies review for chose requirements help developers to create a basic design for the software. Since developers follow the guideline from IEEE 1016-2009 to put all necessary information into this document, it could be a good starting point for the following development cycle.
+
+\newpage
+\section{References}
+ [1] \textit{Programmer Manual}, 1st ed., TekTronix, Inc., Beaverton, OR, 2009, pp. 5-6. \par
+ [2] PyMOTW, "csv – Comma-separated value files," in \textit{pymotw.com}, 2016. [Online]. Available: \texttt{https://pymotw.com/2/csv/}. Accessed: Nov. 30, 2016. \par
+ [3] M. Bruch, "Eclipse Code Recommenders," in \textit{code-recommenders.blogspot.com}, 2010. [Online]. Available: \texttt{http://code-recommenders.blogspot.com/2010/05/its-all-about-intelligent-code.html} Accessed: Nov. 12, 2016.\par
+ [4] PyVISA, "PyVISA: Control your instruments with Python," in \textit{://pyvisa.readthedocs.io/} [Online]. Available: \texttt{http://pyvisa.readthedocs.io/en/stable/}. Accessed: Nov. 30, 2016.\par
+ [5] UMLet, "UMLet: Effective free tool for design UML diagrams," \textit{UMLet} [Online-link]. Available: \texttt{http://www.predictiveanalyticstoday.com/open-source-free-unified-modeling-language-uml-tools/}.Last-Accessed: Dec. , 2016: 5:25AM\par
+ [6] "Introduction to Balsamiq Mockups 3 - Balsamiq Documentation", Docs.balsamiq.com, 2016. [Online]. Available: https://docs.balsamiq.com/desktop/intro/. [Accessed: 02- Dec- 2016]. \par
+ [7] "Balsamiq Mockups 3 Application Overview", YouTube, 2016. [Online]. Available: https://www.youtube.com/watch?v=6BxL5AsuYSo. [Accessed: 02- Dec- 2016]. \par
+ [8] "Tutorials - Balsamiq Support Portal", Support.balsamiq.com, 2016. [Online]. Available: https://support.balsamiq.com/tutorials/. [Accessed: 02- Dec- 2016]. \par
+ [9] "Getting started with PyCharm and Qt 4 Designer", Random Codes - Elementz Tech Blog, 2016. [Online]. Available: https://elementztechblog.wordpress.com/2015/04/14/getting-started-with-pycharm-and-qt-4-designer/. [Accessed: 02- Dec- 2016]. \par
+ [10] "Intro/basic GUI - PyQt with Python GUI Programming tutorial", YouTube, 2016. [Online]. Available: https://www.youtube.com/watch?v=JBME1ZyHiP8. [Accessed: 02- Dec- 2016]. \par
+ [11] S. Online, "Create a Basic GUI Using PyQt - Safari Blog", Safaribooksonline.com, 2016. [Online]. Available: https://www.safaribooksonline.com/blog/2014/01/22/create-basic-gui-using-pyqt/. [Accessed: 02- Dec- 2016]. \par
+ [12] "26.4. unittest — Unit testing framework — Python 3.5.2 documentation", Docs.python.org, 2016. [Online]. Available: https://docs.python.org/3/library/unittest.html. [Accessed: 02- Dec- 2016]. \par
+ [13] "Eclipse/pydev, Pydev with Eclipse - Best Python IDE Available [online-link]  \texttt{http://noeticforce.com/best-python-ide-for-programmers-windows-and-mac}last-Accessed:Dec.1.2016:8:30AM.\par
+ [14] "Pydb – Extended Python Debugger [ available-link] \texttt{http://bashdb.sourceforge.net/pydb/} last-accessed dec.1.2016:6:34 PM.\par 
+\newpage
+\section{Glossary}
+\begin{itemize}
+\item \textbf{Tektronix}: The company that designs and sells test \& measurement devices.
+\item \textbf{VISA}: Virtual Instrument Software Architecture,a popular I/O API between devices and PC in the test and measurement industry.
+\item \textbf{Packet}: Data carrier in Internet which contains source and destination network addresses, error detection codes, and sequencing information.
+\item \textbf{CSV file}: A comma-separated values file store tubular data.
+\item \textbf{querycsv.py}: A open source CSV query program.
+\item \textbf{Intellisense}: A open source code auto-completion program from Microsoft. 
+\item \textbf{API}: Application Program Interface.
+\item \textbf{PyVISA.py}: A VISA communication API library built with Python.
+\item \textbf{VCT}: VISA Communication Tool.
+\item \textbf{Balsamiq Mockups}: A software for design user interface.
+\item \textbf{PCI}: peripheral component Interface.
+\item \textbf{PCI(e)}: peripheral component Interface Express.
+\item \textbf{PXI}: peripheral component Interface eXtensions.
+\item \textbf{PXI(e)}: peripheral component Interface eXtensions Express.
+\item \textbf{NI}: National Instruments.
+\item \textbf{ISA}: Instruction Set Architecture.
+\item \textbf{USB}:Universal Bus serial.
+\item \textbf{GPIB}: General purpose Interface Bus.
+\item \textbf{COM}: Communication Interface.
+\item \textbf{OSI}: Open Systems Interconnection.
+\item \textbf{ISA}: Instruction Set Architecture.
+\item \textbf{PTVS}: open source and free Best Python IDE for Windows.
+\item \textbf{UML}: Unified Modeling Language.
+\item \textbf{Eclipse}:  open source and free Best Python IDE 
+\item \textbf{IDE}:  integrated development environment.
+
+\end{itemize}
+\newpage
+
+
+
+\section{Stakeholders and Design Concern}
+According to information from previous conferences, stakeholders of this software development are \textbf{Clients} \textbf{Tektronix Engineers}, and \textbf{Tektronix Customers}. \par
+First and foremost, clients want a fully functional software, which means the develop team should fully test this software to get rid all possible bugs. clients also specify Python as the programming language so that developers must implement technologies in Python. Then, they also ask the develop team to implement the communication layer and IP address related operations. The developer team should also consider maintenance and update issues. In other words, the software should be sustainable. \par
+Based on the requirements checklist and conversions with clients, the develop team realized that the most important design concern is the usability of the software. Clients stated that the command syntax of VISA was too complex to memorize [1]. Tektronix engineers and its customers had to spend extra time on checking the programmer manual. Therefore, clients asked for accurate and quick documentation access services, the code auto-completion and the keyword query program. The responding accuracy and responding time become two design concerns for this software.\par
+Both Tektronix engineers and Tektronix customers use this software to write software/scripts to Tektronix devices. The software should ensure the completeness of information being transferred to devices. Furthermore, the software should give enough permissions to them so that they can access to packet level or other type data to debug.    
+ 
+
+\section{Design views of requirements assigned to Wenbo Hou}
+\subsection{Creating the Documentation-----Information Viewpoint}
+\subsubsection{Design Description}
+The quantity of the documentation directly determines the user experience of the software. A well-constructed documentation can provide accurate and detailed information to users so that they can quickly find needed information. Besides that, a consistent data structure allows maintainers to take advantages of a template to update the library quickly without affecting the software's functionalities. The code auto-completion program and the query program also require a high quality data access schema. \par  
+In this project, the designer chose the CSV file to build the command library. The CSV files store the data like database tables do. Each row contains the specific information of one entity [2]. Fields in each row contain all attributes of this object. With built-in Python APIs, the software can quick search through the CSV file with SQL format commands from the Python implementation querycsv.py.\par
+Then, designer will modify the programmer manual from Tektronix and other authorized organizations to fit the CSV data structure. Consequently, the correctness and accuracy of the documentation are ensured.   
+\subsubsection{Key Elements}
+  \begin{itemize}
+  \item \textbf{Design Entities}
+        \begin{enumerate}
+        \item \textbf{Data Item}: The detailed Information of built-in commands, Attributes and Events.
+        \item \textbf{Data Class}: Operation, Attribute, and Event.
+        \item \textbf{Data Structure}: CSV file format.
+        \item \textbf{Access Schema}: querycsv.py.
+        \end{enumerate}
+  \item \textbf{Design Relationships}
+  		\begin{enumerate}
+  		\item Data items will associate with a data class. Information of commands belong to the Operation Class.
+        \item The information of a command contains the commands' syntax, description, input, and output.
+        \item The information of a special parameter contains the parameter's name, usage, and developer comments.
+  		\end{enumerate}
+  \item \textbf{Design Attributes}
+  		\begin{enumerate}
+  		\item The documentation is built inside the software to avoid improper changes or undetectable lost.
+		\item Modifications of the documentation must be approved by Tektronix engineers to ensure the correctness and the consistency of the documentation.   
+  		\end{enumerate}
+  \end{itemize}
+\subsubsection{Design Diagram}
+\begin{figure}[ht]
+\centering
+\includegraphics[scale = 0.8]{Command_Library.eps}
+\caption{The UML Diagram for The Documentation}
+\end{figure}
+\newpage
+\subsection{Querying Documentation with a keyword-----Interaction Viewpoint}  
+\subsubsection{Design Description}
+Querying information with keywords requires the program interacts with the documentation and the user interface. First, the user can activate this function by clicking the search button. Then, the function reads the keyword and search it through the built-in documentation. \par
+When users open the search window and input keywords, User Interface will invoke the query program. Then, this program will implement searching APIs from querycsv.py, to query the documentation. After that, it will modify and return the query result to User Interface. The query result may contain the found information or error messages. User Interface will display the result in the search window.
+\subsubsection{Key Elements}
+\begin{itemize}
+\item \textbf{Program Properties}
+	\begin{enumerate}
+	\item The trigger function built in User Interface 
+    \item Not concurrently run
+    \item Do not need a separate process
+    \item Take advantages of querycsv.py
+	\end{enumerate}
+\item \textbf{Involved entities}
+  	  \begin{enumerate}
+      \item \textbf{User Interface}: reads inputs and pass to the query function
+      \item \textbf{The query program}: takes input keyword and query information from the documentation
+      \item \textbf{The documentation}: contains programmatic information related to the software.
+      \end{enumerate}
+\item \textbf{Events in the interaction}
+	\begin{enumerate}
+	\item User Interface invokes the query program.
+    \item Query program searches the documentation with keyword.
+	\item The query program returns search results to User Interface.
+    \item User Interface display results.
+	\end{enumerate}
+\item \textbf{Program States}
+	\begin{enumerate}
+	\item The query program is triggered by clicking search button on the user interface.
+    \item The query program is deactivated when a query work is complete or not invoked at all.
+	\end{enumerate}
+\end{itemize}
+\subsubsection{Design Diagram}
+\begin{figure}[ht]
+\centering
+\includegraphics[scale = 0.8]{Query_Tool.eps}
+\caption{The UML Diagram for The Query Program}
+\end{figure}
+
+
+\subsection{Code Auto-completion-----Context Viewpoint}
+\subsubsection{Design Description}
+The code auto-completion is an addressed requirement of this software. Tektronix engineers emphasized that they had a hard time using the old communication tool because of the compound command syntax. They wanted a code auto-completion feature in the new software so that they could get rid of programmer manual and save time.\par
+To achieve this goal, the designer decides to take advantages of IntelliSense, the code auto-completion program from Visual Studio. This program will read keyboard inputs while users are typing commands in the programmatic window[3]. Then, the program will provide a list of command syntax that starts with being typed letters. Users can use the list as a guild to manually type the commands. Users can also select a command from the list and ask the auto-completion program to complete it. The size of the list will shrink down as the user typing. If a typed in command does not exist in the documentation, the program will highlight it and ask users to double check it.\par 
+The designer will rewrite the program in Python to meet the programming language requirement from our client and prepare the API for User Interface.
+\subsubsection{Key Elements}
+\begin{itemize}
+\item \textbf{Design Entities}
+	\begin{enumerate}
+	\item \textbf{Actors}: Users who are typing into the program window.
+    \item \textbf{Black Box}: Code auto completion function.
+    \item \textbf{Input Information}: Keyboard inputs or Selected command ID
+    \item \textbf{Output Information}: A list of commands syntax starting with input letters or a  completed command syntax in the command line.
+	\end{enumerate}
+\item \textbf{Design Relationships}
+	\begin{enumerate}
+	\item Users provide keyboard inputs to the code auto-complete program. Then,The code auto-complete program will return a list of command syntax starting with input letters to users.
+    \item Users select a command from the command list. Then, the code auto-complete program export the full syntax to the command line.
+	\end{enumerate}
+\item \textbf{Design Constraints}
+	\begin{enumerate}
+	\item The responding time of the code auto-complete program should be short enough to follow the user typing speed. As a result, users would get instant syntax reminder.
+	\item The code auto-complete program is not allowed to provide incorrect command syntax. Illegal or not-found letters will be marked. 
+	\item The code auto-complete program should be compatible with the User Interface. User Interface shall leave space for code auto-complete program APIs. 
+	\end{enumerate}
+\end{itemize}
+\subsubsection{Design Diagram}
+\begin{figure}[ht]
+\centering
+\includegraphics[scale = 0.6]{Code_Autocomplete.eps}
+\caption{The UML Diagram for The Code Auto-completion Program}
+\end{figure}
+\newpage
+
+\subsection{Device Type Identification-----Interaction Viewpoint}
+\subsubsection{Design Description}
+The identification of a being operated device is another requirement from Tektronix engineers. They claimed that the identification information could help them to keep tracking properties of the target device so that they might operate it efficiently. Products from Tektronix are various including, oscilloscopes, analyzers, signal generators, and other test \& measurement devices. This fact implies that different command families exist. With the identification information, Tektronix engineers can get rid of distractions from other command families so that they can improve the work efficiency. \par
+    To show accurate identifications, the program needs to interact with the device and User Interface properly. First, the program calls the identification API[4] through the internal communication interface to get IDN number when a user selects a device to work with. Then, it sends an unique signal to User Interface. Finally, User Interface shows the identification information to users. The Identification information contains different font colors in the programmatic window and the name of the target device type in the programmatic window title. 
+\subsubsection{Key Elements}
+\begin{itemize}
+\item \textbf{Program Properties}
+	\begin{enumerate}
+	\item The trigger function built in User Interface 
+    \item Not concurrently run
+    \item Do not need a separate process
+    \item Take advantages of PyVISA.py
+    \end{enumerate}
+\item \textbf{Involved Entities}
+    \begin{enumerate}
+    \item \textbf{User Interface}: Trigger the Device Identification Program and Change the font color and programmatic title based on the received signal.
+    \item \textbf{Device Identification Program}: Invoke IDN API, analyze returned IDN Info, and send ID signal to User Interface   
+    \item \textbf{Connected Device}:Receive IDN request and send back IDN Info. 
+    \end{enumerate}	
+\item \textbf{Events in The Interaction}
+    \begin{enumerate}
+    \item Trigger the Device Identification Program.
+    \item Identify Connected Device
+    \item Show Identification Information
+    \end{enumerate}
+\item \textbf{Program States}
+	\begin{enumerate}
+	\item The Device Identification program is triggered When user selected a device in User Interface.
+    \item The Device Identification program is deactivated when a Identification work is complete or not invoked at all.
+	\end{enumerate}
+\end{itemize}
+\subsubsection{Design Diagram}
+\begin{figure}[ht]
+\centering
+\includegraphics[scale = 0.8]{Identify_Device.eps}
+\caption{The UML Diagram for The Device Identification Program}
+\end{figure}
+\pagebreak
+
+
+\clearpage
+\section{Design views of requirements assigned to Chenliang Wang}
+\subsection{VCT GUI Design-----Structure Viewpoint}
+\subsubsection{Design Description}
+This section is about the user interface design. The best option what we chose last time is Balsamiq Mockups. Using this software, we can design our VCT user interface online with a high level concept and change easily. \par
+Through the Balsamiq Mockups, we can drag the button, create the connection between button and new windows. It is not the realty VCT is, but it is a good example about what is VCT looks like with almost connection. When we done this, users can check the user interface design through Balsamiq Mockups and point out the problem easily and quickly. All in all, Balsamiq Mockups.is not just the statics pictures, it is the basic user interface design of a high level. \par
+To implement this part, we need research about similar concept such as other VCT. From these, we can get some idea about our VCT. We can discuss about the advantage and disadvantage in order to improve our VCT as better as we can. After this, we will use Balsamiq Mockups to create the user interface. During the create process, we can research online to watch some video of how to use Balsamiq Mockups. It maybe not useful for us of how to use but we can get some good idea during this process. According to video, we can understand all the items exactly for. From the online resources, we know how to create project of Balsamiq Mockups, how to use items in it, how to create link of the buttons[6-8]. \par
+\subsubsection{Design Elements}
+\begin{itemize}
+\item \textbf{Key Proportion}
+	\begin{enumerate}
+	\item Reasonable layout: size, color, buttons and text position are all suitable.
+    \item Include all function buttons: such as write, query, drop down.
+    \item Include all items: such as command input text, text display area.    
+    \end{enumerate}
+\item \textbf{Design Entities}
+	\begin{enumerate}
+    \item UI whole model: the whole blank model.
+	\item Navigation bar: users can find functions easily.
+    \item Command text: input command.
+    \item Function buttons: such as write,query.
+    \item Command auto complete area: display auto complete command.
+    \item Connection information area: display the IP, Hostname, model of the device.
+    \item History drop down list: see the recently 25 history commands.
+    \item Process feedback area: display the situation of VCT.
+    \end{enumerate}
+\end{itemize}
+\subsubsection{Design GUI}
+\begin{figure}[ht]
+\centering
+\includegraphics[scale = 0.8]{GUI.png}
+\caption{The draft GUI design of VCT}
+\end{figure}
+\newpage
+This is the darft of GUI design throught the Balsamiq Mockups. It include the all design elements. Clients can understand the layout of the VCT and we can change easily if somewhere aren't what they want.
+
+\subsection{VCT UI Framework-----Patterns Viewpoint}
+\subsubsection{Design Description}
+User interface is the one piece in our project. From the last document of technology review, we research 3 options of user interface framework by python, and we choose the best option is pyqt. \par
+Using pyqt to create a user interface is a good choice. It is an option with GUI, so it can make use to create our project user interface easily. We can drag some item to our screen and type code to improve it. \par
+According to “Getting started with Pycharm and Qt 4 Designer”, it is the example about make a simple user interface based on python. From this example, we can know how to use pycharm and pyqt to make a user interface. It includes how to create file, drag item, save file, run file even some places of how to use code[9]. Also, from the YouTube, we found a good resource about the code of the python. It is clear from how to install the software to done the whole user interface. As the code of this, it separate to different parts of functions. Such as init, home, run, etc[10]. This is a good way for coding and debug in the future. It can find error easily as the parts are separate. Also, accoding to "Create a Basic GUI Using PyQt", we understand more about pyqt, and pyqt is good for cross-platform with Windows, Linux, and Mac[11]. \par
+To implement this part, we will double check the user interface sketch in order to make sure there are no any problem. Then, we will use pycharm and pyqt to create as same as my sketch. We will drag the all buttons first and use code to improve and implement the functions of all buttons. In order to make the user interface friendly, we will make the feedback of the software displayed at the below of the user interface. When users do some actions, the information will be display that users can know exactly what is software do and what is happen. The buttons which can’t use will be unable to click. It will avoid some wrong actions. Users will know clear that this button will not be able to click at this time. Before I choose the button, we will research the similar software to make sure the buttons are as similar as others. This is a good way to make users can learn and get this software quickly. \par
+\subsubsection{Design Elements}
+\begin{itemize}
+\item \textbf{Key Proportion}
+	\begin{enumerate}
+	\item Implement GUI design to really tool: implement the VCT user interface base on design.
+    \item Navigation bar works: users can click the navigation bar to choice what they want.
+    \item Feedback was displayed.   
+    \item Also buttons works.   
+    \end{enumerate}
+\item \textbf{Design Entities}
+	\begin{enumerate}
+    \item Pyqt: use this to create user interface.
+    \item Size of VCT windows: the size of VCT should be suitable.
+	\item Navigation bar skip: navigation bar could be use.
+    \item Command text.
+    \item Function buttons.
+    \item Command auto complete area. 
+    \item Connection information area.
+    \item History drop down list.
+    \item Process feedback area.
+    \item Device connection interface.
+    \end{enumerate}
+\end{itemize}
+\subsubsection{Code example of Pyqt}
+\begin{figure}[ht]
+\centering
+\includegraphics[scale = 0.8]{code_of_gui.png}
+\caption{The code example of create UI based on Pyqt[9]}
+\end{figure}
+\newpage
+This is the sample of code with click and text display based on pyqt. From the several examples, we can get how to use pyqt to create user interface of VCT. 
+
+\subsection{Function Testing-----Structure Viewpoint}
+\subsubsection{Design Description}
+Testing is one important part for a project. It is not an option that no one software can by successfully without testing. From last technology review, unit testing is the best option for function testing. \par
+As we do this project based on python, we have a good unit testing can be use of python. According to python doc online, “unittest — Unit testing framework”, there exist a library called “unittest”, there are many testing in it. When we want to use this library, we just need “import unittest”. For our project, we need create the VCT, there are a lot of functions in it. From the GUI create to whole software done, all the function what we build all need testing by unit test. During the coding process, we will separate the code based on different parts. The ideal way is each functions have their own function. Therefore, we can do the unit test by each functions one by one. It is not only easy to create unit test function, but also easy for us to figure out the error and fix it. “The unittest module can be used from the command line to run tests from modules, classes or even individual test methods” [12]. \par
+To implement unit testing, we will list all the function what we create during the coding process. We also will check the unit testing doc to make sure we did the right unit testing. The code of unit testing will such as below. \par
+\subsubsection{Design Elements}
+\begin{itemize}
+\item \textbf{Key Proportion}
+	\begin{enumerate}
+	\item Create unit testing function: create unit testing function based on each function.
+    \item Unit testing: run the testing function to check the each function what we use. 
+    \end{enumerate}
+\item \textbf{Functions}
+	\begin{enumerate}
+    \item Click button: When users click button, it should do the right action or jump to the right interface..
+    \item Navigation bar: all button in the navigation bar can be use with correct action.
+	\item Command write and query: users can input command with write or query.
+    \item History: users can check the history with recently 25 commands.
+    \item Feedback: users can view the correct feedback of the VCT.
+    \item Command auto complete: users can see the list of option for the auto complete commands.
+    \item Device connection interface: Users can connect the device by ip or hostname, and the information will displayed on the top of the VCT.
+    \end{enumerate}
+\end{itemize}
+\subsubsection{Code example of unit testing}
+\begin{figure}[ht]
+\centering
+\includegraphics[scale = 0.8]{unittest.PNG}
+\caption{The code example of unit testing based on python[12]}
+\end{figure}
+This is the sample of code with unit testing based on python. From the several examples, we can get how to create unit testing function and how to test each functions.
+
+
+\pagebreak
+\clearpage
+\section{\textbf{Design views of Requirements Assigned to Lucien Tamno}}
+\begin{itemize}
+\item \textbf{Introduction}
+As communication piece of the VCT software, the module heavily relies on the information received from user interface and has a goal to properly channel data from the receiving end  to the sending end without altering, delaying or interrupting the course, or either: running them into the wrong path.Therefore, this process requires among of software interfaces, made up a greater number of classes, functions, subsystems as summarized on following table ( Table 1) and further down details into subsections.\par
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{3cm}|p{3cm}|p{3cm}| } 
+\hline
+\multicolumn{3}{|c|}{Organization Design viewpoints} \\
+\hline
+VISA API INVOCATION & Data Management & Connection with Hardware \\
+\hline
+Viewpoint Description & Viewpoint Description & Viewpoint Description \\
+\hline
+Key Components and utilization & Interconnection Data Management & Key Components  testing techniques \\
+\hline
+ Design  diagram Associate & Design  diagram Associate &  Design  diagram Associate \\
+\hline
+\end{tabular}
+\caption{ SUMMARY COMMUNICATION DESIGN}
+\end{center}
+\end{table}
+\end{itemize}
+
+
+\subsection{\textbf{Communication Interface-VISA API INVOCATION----------Logical Design Viewpoint }}
+
+\subsubsection{Viewpoint Description}
+VISA API Invocation viewpoint is to provide details to any stakeholder of the VCT system on how the communication interface handles and channels data form the streams coming from the user interface all the way to interact with the hardware of a hosting device. essentially, written in python via Eclipse [13] which implements an efficient Pydev free of cost and packed with with powerful features for Python programming language. alternatively we will use for the windows system the most appropriate IDE named PTVS which can in replacement of Eclipse play effective role development on windows environment . So the Invocation viewpoint will be a set modules and each module made up with classes, and in turn, each class made up with functions or subroutines. All the modules put together will be as subsystem known as: VISA API Invocation subsystem and that subsystem will use as describe in the next section. 
+
+\subsubsection{Key Components and Utilization }
+\begin{enumerate}
+\item \textbf{Interface Stream-in : communication-userStream-in interface} \par 
+this interface has the unique goal to look at the incoming stream traffic from the user interface and check the following conditions:
+\begin{itemize}
+\item  Format of incoming streams comply with any implemented module format:"ex:\textit{class-USER-FormatStream-in} ".
+\item Enough viable stream to manage: "ex:\textit{ class-USER-ManagementStream-in}".
+\end{itemize}
+When validations occur at this level the stream is received and sent to the management Interface, which will be elaborated on the section data management.
+
+\item \textbf{Interface Stream-out : communication-userStream-out interface} \par
+The goal of the interface of communication is to look at the availability of user interface and  to stream data out.Checking the availability of the user interface, the outgoing stream has to have functionalities of sending queries and getting responses as follows:
+\begin{itemize}
+ \item  the query was issued to the user interface and response approved : "ex:\textit{ class-Com-queryUser-out, class-User-responseQuery-COM} "
+\item : the outgoing stream encapsulates with the correct format: "ex:\textit{class-EncapUserstream-out} ".
+\end{itemize}
+those data doing to the user interface were collected from another interface called: command query and auto-completion.therefore, we have make sure those data had been properly received as well.
+
+\item \textbf{Interface Stream-in : communication-Autocompletion-in interface} \par
+Here data are received from the interface auto-completion interface, reading the memory of the instrument plugin and  complying with the following conditions:
+\begin{itemize}
+\item   Incoming streams from the auto-completion Interface format:"ex:\textit{ class-AutoCompletion-FormatStream-in}".
+\item Enough viable stream to manage from the query auto completion interface : "ex:\textit{class-AutoCompletion-ManagementStream-in}".
+\end{itemize}
+Same as the user interface the communication has to make sure the formats of data sent out are relevant to the auto-completion interface.
+
+\item \textbf{Interface Stream-out : communication-Autocompletion-out interface} \par
+At this point the communication is interacting with the auto-completion counterpart according to standards hereafter:
+\begin{itemize}
+ \item  the query was issued to the user interface and response approved :"ex:\textit{class-COM-queryAutocompletion-out, class-Autocompletion-responseCOM} "
+\item : the outgoing stream encapsulates with the correct format: " ex:\textit{class-Autocompletion-Encapsultstream-out } ".
+\end{itemize}
+
+\end{enumerate}
+
+\subsubsection{ Design  diagram Associate}\par 
+the tool use to draw the diagram is an open source, free cost with the flexibility and can export various diagram formats:jpg,eps,pdf,svg right from the software without conversion: UMLet[5] 
+\begin{figure}[ht]
+\centering
+\includegraphics[scale = 0.3]{com-in-diagram.eps}
+\caption{The UML Diagram for Communication-User-QueryAutoCompletion Interfaces}
+\end{figure}
+
+
+\pagebreak
+\subsubsection{Testing Techniques}
+The diagram above choose a set of interfaces extended into classes and within each class we have functions and properties.All these subroutines need to be tested out and debugged to keep them free of defects. And to do so, the following tools be used either sequentially or in parallel:\par 
+\begin{enumerate}
+\item for the testing Technique:\par 
+In general, input domain testing along with mutation testing and combine with a good oracle test functions will be written to expose bugs because mutation testing has the highest capability to expose bugs in any given function regardless the programming language used ( proficiency from the CS 362 class).\par 
+\item for the debugging Technique:\par 
+essentially pydb[14] will be used in its extended version including commands as pydb.py from the previous version and some features.
+\end{enumerate}
+
+
+\subsection{\textbf{Communication Interface-Data Management------Dependency  Design Viewpoint }}
+
+\subsubsection{Viewpoint Description}
+Management of data has to do with all processes to handle information as soon as they walk inside the the communication interface till they exit back out as they follow their course.nonetheless, there are many phases of transitions taking place here. And those transitions call up phenomena of dependency between various interfaces-classes-functions running within the boundaries of communication interface of the VCT software. And those phenomena have a magnetic effect to dynamically change the system and certainly placing the system, each time, on dynamic state transformation. But to be consistent with the SDD standard, we will solely focus on the dependency design viewpoint with respect to the interconnection of data management.\par 
+
+\subsubsection{Interconnection of Data Management components}
+As soon as data get inside the communication interface, received by one of the interfaces mentioned in the invocation communication interface above, a set of class functions will properly channel those information to the right place,but most important point here is to know where data come from and where they go, how they are being kept unaltered and also how to prevent any concurrent transmissions of streams from one point to another of this subsystem. To do so, the package design diagram in conjunction with an underlying  data flow diagram for the part provide a better answer. Before then, components are packages described hereafter:
+\begin{itemize}
+\item package from user interface to  communication interface: ex: "User-inward-COM"
+\item package from communication interface to user interface: ex: "COM-outward-USER"
+\item package to Auto-completion interface from communication interface: ex: "COM-outward-AUTO"
+\item package fro Auto-completion interface to communication interface: ex: "AUTO-inward-COM"
+\item package stream data to be removed: ex: " services-stream-remove"
+\item package stream data to be added : ex: " services-stream-add"
+\end{itemize}
+All these packages as mentioned have to interact against one another with less or totally no collisions. and that according to the diagrams hereafter:
+
+\subsubsection{Design  diagram Associate}
+\begin{figure}[ht]
+\centering
+\includegraphics[scale = 0.5]{diagram_of_package_communication.eps}
+\caption{The UML Diagram for Communication-User-QueryAutoCompletion Interfaces}
+\end{figure}
+
+\pagebreak
+
+\subsection{\textbf{Communication Interface-Connection with Hardware----------Interaction Design Viewpoint }}
+
+\subsubsection{Viewpoint Description}
+This piece of the VCT software implemented inside the communication interface is to interact with the hardware of the system in which it resides. understandably, the communication-hardware interface is made a number of interfaces, classes and functions to know how to make connections with various buses, which we will clearly define roles in the key components and testing techniques section.
+\subsubsection{Key Components and testing techniques}
+Each component of the communication hardware interface has to properly select the channel to use in order to effectively convey data to sent. In fact, the major problem at this point is to identify the right channel to put information into, lest to return a message to the sender.Indeed, we have all sort of buses system to be utilized, buses such as  ( PCI, ISA, PXI, GPIB, RS232, USB ) and much more, while the the most is PCI/PXI and its extended version PCIe/PXIe. It's important to denote that VCT software does not  directly interact  with the hardware,but sparks any Operating System via the functions written to channel data on the hardware. For the case of Windows system ( Microsoft), it's done by calling up each appropriate dynamic link library (DLL) that gets access to the relevant bus system. and the diagram associate would be:
+
+\subsubsection{ Design  diagram Associate}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale = 0.5]{diagram_sequence_communication-hardware.eps}
+\caption{The UML Diagram for Communication-User-QueryAutoCompletion Interfaces}
+\end{figure}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
