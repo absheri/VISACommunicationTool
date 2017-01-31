@@ -1,0 +1,12 @@
+Two Python modules need to be set up:
+	1. PyQt
+	2. PyVISA
+
+1. Download PyCharm Communite Version from https://www.jetbrains.com/pycharm/download and install it
+2. Install Python3.6(!!!!) to your Laptop/Desktop. Resource can be found on https://www.python.org/
+3. Create Your project in Pycharm
+4. Go to File>Settings>Project Interpreter and click the green plus sign. 
+5. Search two above tow modules and install them.
+
+
+   (Can be used for intergrated PyQt) 

@@ -1,0 +1,128 @@
+\documentclass[letterpaper,10pt,notitlepage]{article}
+
+\usepackage{graphicx}                                        
+\usepackage{amssymb}                                         
+\usepackage{amsmath}                                         
+\usepackage{amsthm}                                          
+
+\usepackage{alltt}                                           
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+\usepackage{pstricks, pst-node}
+\usepackage{titling}
+\usepackage{geometry}
+\usepackage{graphicx}
+
+\geometry{textheight=8.5in, textwidth=6in}
+
+%random comment
+
+\newcommand{\cred}[1]{{\color{red}#1}}
+\newcommand{\cblue}[1]{{\color{blue}#1}}
+
+
+\usepackage{geometry}
+\usepackage{{hyperref}}
+
+
+\def\name{Wenbo Hou}
+%% The following metadata will show up in the PDF properties
+\hypersetup{
+  colorlinks = true,
+  urlcolor = black,
+  pdfauthor = {\name},
+  pdfkeywords = {cs461 ``Senior Capstone'' first writing`},
+  pdftitle = {CS 461 Problem Statement},
+  pdfsubject = {CS 461 Writing Up},
+  pdfpagemode = UseNone
+}
+\parindent = 0.2 in
+\parskip = 0.2 in
+\title{
+\textbf{\huge{Python Based VISA communication Tool}} \\
+\hfill
+\hfill
+\hfill
+}
+\author {Chenliang Wang\and  Wenbo Hou\and Lucien Armand Tamdja Tamno\and Seth Ward \and  Ian Absher}
+\date{October 14, 2016}
+\begin{document}
+\begin{titlepage}
+    \begin{center}
+    \maketitle
+    \begin{abstract}
+   The rise of Internet of things and the desire to revamp  into a single place multiservices has forced Tektronix to look into new solution to adapt its workplace environment. Reason why, Tektronix has vowed to get a new software termed: Visa Communication Tool, to easily manage its variety of applications and  meet the speedy world of innovations. In fact, Virtual Instrument Software Architecture, also known as VISA, is a standard communication API (Application Programming Interface) for applications with test and measurement devices in Test and Measurement industry. However, the current Tektronix VISA communication applications merely provide inefficient interfaces with limited functionalities. Therefore, employees from Tektronix and our developing team have decided to created a Python based VISA communication tool that will foster the Tektronix’ single integration software environment in 9 months. We also implement the principles of communications layers and ISO9241 to successfully complete our design.  The new tool will have the capability of providing a graphical User Interface and helping engineers can easily carry out their tasks.
+    \end{abstract}
+    \end{center}
+\end{titlepage}
+\section{Problem Statement}
+\subsection{Problem Definition}
+The problem of the Python Based VISA Communication Tool project is related to the existence of a clunky or clumsy application software that actually provides limited functionalities and doesn’t perform little, when it comes the time to scale up with the requisite company tasks.
+\newline
+\newline
+In fact, the current software gives the user little of intuitive functionalities and features are so time consuming that the client can’t really enjoy the work in this fast pace world of internet of Things. Reasons why, the Tektronix wants to revamp it Visa software by adding into it a tool called a VisaCommunicationTool, that will enable any of its user to really enjoys additional features like: 
+    \begin{itemize}
+        \item Effective and efficient way of conveying with others instruments of its environment via user interface called “programmatic interface”
+        \item Facilitate new users to access the same above devices by providing intuitive programmatic interface.
+    \end{itemize}
+That said, the project to be carried out is to, after clear analysis of the current awkward application and isolation of problematic parts, to device a subsequent delineated system termed VisacommunicationTool that will ultimately be the piece of the software requested and expected by the Tektronix company, to perform in its modules the following tasks:
+s   \begin{itemize}
+        \item Automatic and intuitive syntax completion commands issued by a user.
+        \item Provide a functionality of syntax errors correction by first, highlighting flaws when occurred and instantly drawing user’s attention by suggesting the right syntax to pick up.
+    \end{itemize}
+In other hands, while running, the new tool should render less time of delay by providing quick response and in parallel effectively interfacing with its environment.
+The piece of embedded software should be able to efficiently run on any platform of user choice and has the capability to be: “load and run” without any prior installation. Meanwhile, the VisacommunicationTool has to yield the feature to be a resizable tool even able to run on most of the devices (computer, tablet, Smartphone) on the mobile workplace environment as we have it today. To top it all, when compared with the current tool at the Tektronix disposal, the incoming software has to enhance the buffering capability of characters displayed which gives to the user the chance of typing then viewing the entire command line, but also to store a significant list of previous commands.
+\subsection{Proposed Solution}
+As we elaborated on the aforementioned problems and converse with users, it plays out that the entire process will be divided into two main parts: interfaces and functionalities. First off, we will use others software tools to rebuild the interfaces. The interfaces are the places where the user interact with the system, so It should be looks professional and use friendly. From the experience of use the software before, the interfaces of the VISA Communication Tool should be user-friendly and simple and the design made up with:
+    \begin{itemize}
+        \item All interfaces will be consistent.
+        \item A function bar somewhere can be find all function easily.
+        \item As the tool has command input, the color of command and background will easy to read (maybe a few choices).
+    \end{itemize}
+For the function part, we will develop more functions based on python. We will solve the problem one by one.
+    \begin{itemize}
+        \item The tools should communicate with device based on commands, we will create a command window where user can write or query commands.
+        \item User can check recently 25 commands. We will design a button for check the history and reload the history from the database.
+        \item We will create another windows where users can find available device in the Internet. Also, users can find a device by tracking its IP address.
+        \item The tools can check the command dictionary that choice the most closed command as an autocomplete. We will set some symbols to distinguish many kinds of device.
+    \end{itemize}
+In order to develop the VISA Communication Tool successfully, we will keep in touch with Tektronix, and adjust our design. 
+\vspace{0.3cm}
+\\
+At Expo, the VISA Communication Tool will be awesome. It will not only include the professional interfaces but also have multiple functions. The tool will never hard to use. It will be simple and easy even for new user and more automatic. We will complete all the function what Tektronix need base on the priority. All in all, after 9 months the problems of VISA Communication Tool will be solved and a great tool will appear.
+\subsection{Performance Metrics}
+Primarily, we will keep in touch with our clients, and adjust our design based on their feedback. 
+\vspace{0.3cm}
+\newline
+To confirm our solution functions well, we generate a comprehensive test plan. Basically, we will implement TDD (Test Driven Development) in the whole design pattern. Our team will divide the large project into units, where a unit represents either a class or a function in python programming language. Each unit has a unique test case that leads programmers to write the correct code. Then, we will prepare random tests for each functionality in our solution. For example, we will generate a random tester that creates thousands of incomplete commands and inputs them into our auto-complete function. Consequently, we can evaluate the software’s performance in completing typed commands, and then fix caught bugs. Finally, we will release a test version of our software and do the hallway usability testing with Tektronix engineers. We will randomly pick individuals who never touch VISA communication tool before to use our software. Then, we collect test data and users’ advice to improve the test version. We will hold hallway usability tests for at least five times to make use our software have all necessary functionalities and be user-friendly enough. In the end, we will ask our mentor to do the ultimate test to check whether the software meets all requirements. 
+\vspace{0.3cm}
+\\
+If possible, we would like to establish a database to collect useful messages to keep optimizing the software.  \\
+\newpage
+\textbf{}\\
+\vspace{2.0cm} 
+
+\noindent\rule{13cm}{0.4pt}\\
+\textbf{Ian Absher}\\
+\vspace{2.0cm}
+
+\noindent\rule{13cm}{0.4pt}\\
+\textbf{Seth Ward}\\
+\vspace{2.0cm} 
+
+\noindent\rule{13cm}{0.4pt}\\
+\textbf{Lucien Armand Tamdja Tamno}\\
+\vspace{2.0cm} 
+
+\noindent\rule{13cm}{0.4pt}\\
+\textbf{Chenliang Wang}\\
+\vspace{2.0cm} 
+
+\noindent\rule{13cm}{0.4pt}\\
+\textbf{Wenbo Hou}\\
+\end{document}
