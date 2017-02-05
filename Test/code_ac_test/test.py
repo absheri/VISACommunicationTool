@@ -1,5 +1,4 @@
 from Src.Extention.src.code_ac import *
-from PyQt5.QtGui import *
 import sys
 import ctypes
 
@@ -16,7 +15,7 @@ class MainWindow(QWidget):
         self.init_main()
 
     def init_main(self):
-        self.setGeometry(800,800,1600,900)
+        self.setGeometry(600,600,800,600)
         self.setWindowTitle('VISA Communication')
         self.setWindowIcon(QIcon('..\..\Src\Img\icon.png'))
         self.extention = CodeAC(self)

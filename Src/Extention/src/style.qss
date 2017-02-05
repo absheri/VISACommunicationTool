@@ -1,0 +1,6 @@
+QLineEdit{
+        font: 14px;
+}
+QListWidget{
+        font: 14px;
+}
