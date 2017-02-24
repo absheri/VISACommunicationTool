@@ -12,17 +12,21 @@ class MainWindow(QWidget):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.extention = None
-        self.init_main()
+        self.entry = QLineEdit(self)
 
     def init_main(self):
         self.setGeometry(600,600,800,600)
         self.setWindowTitle('VISA Communication')
         self.setWindowIcon(QIcon('..\..\Src\Img\icon.png'))
-        self.extention = CodeAC(self)
         self.show()
 
-if __name__ == '__main__':
+    def active_extention(self):
+        self.extention = CodeAC(self.entry)
+        self.extention.active_script()
 
+if __name__ == '__main__':
     app = QApplication(sys.argv)
     root = MainWindow()
+    root.init_main()
+    root.active_extention()
     sys.exit(app.exec_())
