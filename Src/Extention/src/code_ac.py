@@ -1,6 +1,10 @@
-from PyQt5.QtCore import QModelIndex
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+
+
+def search (key):
+    result = None
+    return result
 
 
 def get_data(model):
@@ -15,25 +19,21 @@ def get_data(model):
         model.insertRow(index, item)
         index += 1
 
+
 class CodeAC:
     def __init__(self, input_line):
         self.completer = QCompleter()
         input_line.setCompleter(self.completer)
         self.model = QStandardItemModel()
+        self.input_line = input_line;
 
     def active_script(self):
         get_data(self.model)
         self.completer.setModel(self.model)
-        self.completer.highlighted[QModelIndex].connect(self.tip_balloon)
+        self.completer.activated.connect(self.tip_balloon)
 
-    def tip_balloon(self, index):
+    def tip_balloon(self, text):
         # selected highlight item
-        item_index = index.row()
-        if item_index > -1:
-            item = self.model.item(item_index)
-            tool_tip = "Test Value"
+        self.input_line.setToolTip(text)
 
-        #source_index = self.completer.completionModel().mapToSource(index)
-        #item = self.model.item(item_index)
-        #item.setToolTip("balabala")
 
