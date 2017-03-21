@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c698e2-3e99-4372-8eb1-f1590cc9cfed" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Src/Main/GUI.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/VISACommunicationTool-GROUP64.iml" afterPath="$PROJECT_DIR$/.idea/VISACommunicationTool-GROUP64.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Src/Extention/src/code_ac.py" afterPath="$PROJECT_DIR$/Src/Extention/src/code_ac.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Test/code_ac_test/test.py" afterPath="$PROJECT_DIR$/Test/code_ac_test/test.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,26 +21,38 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="code_ac.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="code_ac.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Src/Extention/src/code_ac.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="91" column="54" lean-forward="false" selection-start-line="91" selection-start-column="54" selection-end-line="91" selection-end-column="54" />
+            <state relative-caret-position="499">
+              <caret line="92" column="25" lean-forward="true" selection-start-line="92" selection-start-column="25" selection-end-line="92" selection-end-column="25" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
-                <element signature="e#575#583#0" expanded="false" />
-                <element signature="e#611#619#0" expanded="false" />
-                <element signature="e#647#655#0" expanded="false" />
+                <element signature="e#585#593#0" expanded="false" />
+                <element signature="e#621#629#0" expanded="false" />
+                <element signature="e#657#665#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GUI.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Src/Main/GUI.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1482">
+              <caret line="63" column="58" lean-forward="false" selection-start-line="63" selection-start-column="58" selection-end-line="63" selection-end-column="58" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/code_ac_test/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="38" column="49" lean-forward="true" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
+            <state relative-caret-position="1482">
+              <caret line="39" column="32" lean-forward="true" selection-start-line="36" selection-start-column="4" selection-end-line="39" selection-end-column="32" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -53,6 +69,11 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>menubar</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -67,6 +88,7 @@
         <option value="$PROJECT_DIR$/Src/Lib/a" />
         <option value="$PROJECT_DIR$/Src/Extention/src/query_doc.py" />
         <option value="$PROJECT_DIR$/Test/code_ac_test/test.py" />
+        <option value="$PROJECT_DIR$/Src/Main/GUI.py" />
         <option value="$PROJECT_DIR$/Src/Extention/src/code_ac.py" />
       </list>
     </option>
@@ -78,7 +100,7 @@
     <option name="height" value="1402" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -91,23 +113,109 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VISACommunicationTool-GROUP64" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VISACommunicationTool-GROUP64" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VISACommunicationTool-GROUP64" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VISACommunicationTool-GROUP64" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code_ac_test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VISACommunicationTool-GROUP64" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VISACommunicationTool-GROUP64" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VISACommunicationTool-GROUP64" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VISACommunicationTool-GROUP64" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VISACommunicationTool-GROUP64" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VISACommunicationTool-GROUP64" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Img" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Wenbo\Documents\GitHub\VISACommunicationTool-GROUP64\Src\Extention\src" />
-      <recent name="C:\Users\Wenbo\Documents\GitHub\VISACommunicationTool-GROUP64\Lib" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Wenbo\Documents\GitHub\VISACommunicationTool-GROUP64\Src\Lib" />
       <recent name="C:\Users\Wenbo\Documents\GitHub\VISACommunicationTool-GROUP64\Src\Extention\src" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Wenbo\Documents\GitHub\VISACommunicationTool-GROUP64\Src\Main" />
+      <recent name="C:\Users\Wenbo\Documents\GitHub\VISACommunicationTool-GROUP64\Src\Extention\src" />
+      <recent name="C:\Users\Wenbo\Documents\GitHub\VISACommunicationTool-GROUP64\Lib" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.GUI">
     <configuration default="false" name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -138,6 +246,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="VISACommunicationTool-GROUP64" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Src/Extention/src/code_ac.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="GUI" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Src/Main" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="VISACommunicationTool-GROUP64" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Src/Main/GUI.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -276,14 +401,16 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Python.test" />
       <item index="1" class="java.lang.String" itemvalue="Python.code_ac" />
+      <item index="2" class="java.lang.String" itemvalue="Python.GUI" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Python.test" />
-        <item index="1" class="java.lang.String" itemvalue="Python.code_ac" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Python.GUI" />
+        <item index="1" class="java.lang.String" itemvalue="Python.test" />
+        <item index="2" class="java.lang.String" itemvalue="Python.code_ac" />
       </list>
     </recent_temporary>
   </component>
@@ -333,14 +460,21 @@
       <option name="project" value="LOCAL" />
       <updated>1490121199827</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Read CSV with pandas package">
+      <created>1490121224013</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1490121224013</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="2182" height="1402" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21364705" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21364705" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33110926" sideWeight="0.50164706" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -385,7 +519,8 @@
     <MESSAGE value="2/25/2017" />
     <MESSAGE value="tooltip on line edit" />
     <MESSAGE value="Read CSV &#10;Generate Syntax List" />
-    <option name="LAST_COMMIT_MESSAGE" value="Read CSV &#10;Generate Syntax List" />
+    <MESSAGE value="Read CSV with pandas package" />
+    <option name="LAST_COMMIT_MESSAGE" value="Read CSV with pandas package" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -406,9 +541,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -429,9 +564,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -466,9 +601,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -490,9 +625,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -514,9 +649,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -538,9 +673,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -562,9 +697,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -586,9 +721,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -610,9 +745,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -634,9 +769,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -658,9 +793,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -682,9 +817,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -706,9 +841,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -730,9 +865,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -770,25 +905,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Src/Extention/src/code_ac.py">
+    <entry file="file://$PROJECT_DIR$/Test/code_ac_test/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="91" column="54" lean-forward="false" selection-start-line="91" selection-start-column="54" selection-end-line="91" selection-end-column="54" />
+        <state relative-caret-position="1482">
+          <caret line="39" column="32" lean-forward="true" selection-start-line="36" selection-start-column="4" selection-end-line="39" selection-end-column="32" />
           <folding>
-            <element signature="e#0#29#0" expanded="true" />
-            <element signature="e#575#583#0" expanded="false" />
-            <element signature="e#611#619#0" expanded="false" />
-            <element signature="e#647#655#0" expanded="false" />
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test/code_ac_test/test.py">
+    <entry file="file://$PROJECT_DIR$/Src/Main/GUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="38" column="49" lean-forward="true" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
+        <state relative-caret-position="1482">
+          <caret line="63" column="58" lean-forward="false" selection-start-line="63" selection-start-column="58" selection-end-line="63" selection-end-column="58" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Src/Extention/src/code_ac.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="499">
+          <caret line="92" column="25" lean-forward="true" selection-start-line="92" selection-start-column="25" selection-end-line="92" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+            <element signature="e#585#593#0" expanded="false" />
+            <element signature="e#621#629#0" expanded="false" />
+            <element signature="e#657#665#0" expanded="false" />
           </folding>
         </state>
       </provider>

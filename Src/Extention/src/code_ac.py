@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 import pandas as pd
-
+import csv
 
 def query_csv_awg():
     data = pd.read_csv("..\..\Src\Lib\AWG.csv",  encoding="ISO-8859-1", header=None,
@@ -81,19 +81,17 @@ class DocQuery(QDialog):
     def __init__(self, parent=None, device=None):
         super().__init__(parent)
         self.device = device
-        label_keyword = QLabel("Keyword",self)
         keyword_in = QLineEdit(self)
         search_button = QPushButton("Go", self)
-        #search_button.clicked.connect(self.doc_search)
+        search_button.clicked.connect(self.doc_search)
         self.grid_layout = QGridLayout(self)
         self.grid_layout.setSpacing(10)
-        self.grid_layout.addWidget(label_keyword, 1, 0)
-        self.grid_layout.addWidget(keyword_in, 1, 1)
-        self.grid_layout.addWidget(search_button, 2, 0)
+        self.grid_layout.addWidget(keyword_in, 1, 0)
+        self.grid_layout.addWidget(search_button, 1, 1)
+        self.setWindowTitle("Search Documentation")
 
-   # def doc_search(self):
-   #     key = self.keyword_in.text()
-   #     group = self.group_in.text()
-   #     reader = csv.reader(open("..\..\Src\Lib\AWG.csv", "rt"))
-   #     for row in reader:
+    def doc_search(self):
+        key = self.keyword_in.text()
+        reader = csv.reader(open("..\..\Src\Lib\AWG.csv", "rt"))
+        #for row in reader:
 

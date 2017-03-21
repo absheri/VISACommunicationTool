@@ -17,12 +17,12 @@ class MainWindow(QWidget):
         self.connected_device = None
         self.query_window = None
         self.btn1 = QPushButton("Button 1", self)
-        self.btn1.move(150, 50)
 
     def init_main(self):
         self.setGeometry(600,600,800,600)
         self.setWindowTitle('VISA Communication')
         self.setWindowIcon(QIcon('..\..\Src\Img\icon.png'))
+        self.btn1.move(150, 50)
         self.btn1.clicked.connect(self.active_query)
         self.idn_connected_device()
         self.show()
