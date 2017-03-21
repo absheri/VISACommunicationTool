@@ -1,19 +1,21 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-import csv
+import pandas as pd
 
 
 def query_csv_awg():
-    reader = csv.reader(open("..\..\Src\Lib\AWG.csv", "rt"))
+    data = pd.read_csv("..\..\Src\Lib\AWG.csv",  encoding="ISO-8859-1", header=None,
+                       usecols=[1, 2])
     cmd = {}
-    for row in reader:
-        if row[1] is not None:
-            if '?' not in row[1]:
-                cmd.update({row[1]: 0})
+    for item in data[1]:
+        if str(item) is not None:
+            if '?' not in str(item):
+                cmd.update({str(item): 0})
             else:
-                cmd.update({row[1]: 1})
-        if row[2] is not None:
-            cmd.update({row[2]:1})
+                cmd.update({str(item): 1})
+    for item in data[2]:
+        if str(item) is not None:
+            cmd.update({str(item):1})
     return cmd
 
 
@@ -73,4 +75,25 @@ class CodeAC:
         # selected highlight item
         self.input_line.setToolTip("none")
 
+
+class DocQuery(QDialog):
+
+    def __init__(self, parent=None, device=None):
+        super().__init__(parent)
+        self.device = device
+        label_keyword = QLabel("Keyword",self)
+        keyword_in = QLineEdit(self)
+        search_button = QPushButton("Go", self)
+        #search_button.clicked.connect(self.doc_search)
+        self.grid_layout = QGridLayout(self)
+        self.grid_layout.setSpacing(10)
+        self.grid_layout.addWidget(label_keyword, 1, 0)
+        self.grid_layout.addWidget(keyword_in, 1, 1)
+        self.grid_layout.addWidget(search_button, 2, 0)
+
+   # def doc_search(self):
+   #     key = self.keyword_in.text()
+   #     group = self.group_in.text()
+   #     reader = csv.reader(open("..\..\Src\Lib\AWG.csv", "rt"))
+   #     for row in reader:
 
