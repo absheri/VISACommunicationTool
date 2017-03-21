@@ -1,0 +1,1552 @@
+Trigger,ABORt,,,,,"ABORT resets the trigger system.
+","This command stops waveform generation when the arbitrary waveform generator
+is in gated mode. This is equivalent to releasing the Trig button on the front panel
+when the instrument is in gated mode.
+"
+Control,AWGControl:APPLication:RUN <application_name>,,,,"<application_name>::=<string> specifies the application to be executed.
+","AWGCONTROL:APPLICATION:RUN SERIALXPRESS runs the SerialXpress
+application.
+","This command executes the specified application.
+"
+Control,AWGControl:APPLication:STATe? <application_name>,,"<Boolean>
+0 indicates False
+1 indicates True
+",,"<application_name>::=<string>
+","AWGCONTROL:APPLICATION:STATE? SERIALXPRESS might return 1 indicating
+that the SerialXpress application is running.
+","This query returns the running state of the specified application.
+"
+Control,AWGControl:CLOCk:DRATe <divider_rate>,AWGControl:CLOCk:DRATe?,"<NR1>
+",,"<divider_rate>::=<NR1>
+At *RST, this returns the minimum value.
+","AWGCONTROL:CLOCK:DRATE 8 sets the divider rate to 8.
+AWGCONTROL:CLOCK:DRATE? returns 8.
+","This command and query sets or returns the divider rate for the external oscillator.
+Divider rate is applicable only when the reference oscillator source is external.
+Only 1, 2, 4, 8?€? are valid values.
+Errors for the AWG5000 series are ?€?222 and ?€?224. The ?€?222, which is out of
+range, is produced when a value is greater than 32 and less than or equal to 256.
+Any non-power of 2 value creates a ?€?224 error. For the AWG7000 series, there
+is no out of range error and any non-power of 2 and greater than 256 produces
+a ?€?224.
+"
+Control,AWGControl:CLOCk:PHASe[:ADJust] <NR3>,AWGControl:CLOCk:PHASe[:ADJust]?,"<NR3>
+",,"<NR3>
+The setting range of NR3 is ??72,000 degrees (??200 clocks), and the resolution
+is 0.1 degree.
+At *RST, this returns 0 degree.
+","AWGCONTROL:CLOCK:PHASE:ADJUST 120 sets the clock phase adjustment
+value to 120 degrees.
+AWGCONTROL:CLOCK:PHASE:ADJUST? returns 1.20000000E+002, indicating
+that the clock phase adjustment value is 120 degrees.
+","This command and query sets or returns the clock phase adjust. It is used to
+adjust the internal clock phase of the instrument to synchronize or align timing
+with external devices.
+When the sampling rate is below 375 MS/s, the instrument may take a few
+minutes to execute the command or to set the sampling rate. Spurious in the
+output signal may increase if you set the clock phase to any value other than 0
+(zero) with the interleave in On state.
+"
+Control,AWGControl:CLOCk:SOURce <source>,AWGControl:CLOCk:SOURce?,"EXT|INT
+",,"<source>::={EXTernal|INTernal}
+EXTernal specifies that the clock signal from external oscillator is used.
+INTernal specifies that the clock signal is generated internally.
+At *RST, this value is set to INTernal.
+","AWGCONTROL:CLOCK:SOURCE EXTERNAL sets the clock source to EXTernal.
+AWGCONTROL:CLOCK:SOURCE? returns EXT.
+","This command and query sets or returns the clock source. When the clock source
+is internal, the arbitrary waveform generator?€?s internal clock is used to generate
+the clock signal. If the clock source is external, the clock signal from an external
+oscillator is used.
+"
+Control,AWGControl:COMPile <filename>,,,,"<filename>::=<string>
+","AWGCONTROL:COMPILE ?€?SIN.EQU?€? compiles the equation file named ?€?sin.equ?€?.
+","This command executes the commands in the specified equation file. This
+command executes the WPL contents of the specified file name, returning when
+the commands in the file have been executed.
+"
+Control,AWGControl:CONFigure:CNUMber?,,"<NR1>
+1, 2, or 4 depending on the model.
+",,,"AWGCONTROL:CONFIGURE:CNUMBER? might return 2.
+","This query returns the number of channels available on the instrument. It returns
+the count of channels even when they are disabled. However, interleaved channels
+are not included in the count.
+"
+Control,AWGControl:DC[n][:STATe] <state>,AWGControl:DC[n][:STATe]?,"<state>
+",,"<state>::= <Boolean>
+0 indicates OFF
+1 indicates ON
+At *RST, this returns 0.
+","AWGCONTROL:DC1:STATE 1 sets the DC1 output to On.
+","This commands and query sets or returns the output state of one of the four DC
+outputs. Use this command to turn off or turn on the DC outputs.
+The value of n = 1|2|3|4
+The output state is common for all DC outputs. Therefore, irrespective of the
+value used for ?€?n?€? in the command, all DC outputs are switched on or switched off
+at once.
+"
+Control,AWGControl:DC[n]:VOLTage[:LEVel][:IMMediate]:OFFSet <offset>,AWGControl:DC[n]:VOLTage[:LEVel][:IMMediate]:OFFSet?,"<NR3>
+",,"<offset>::=<NR3> the value will be between ?€?3.0 V to +5.0 V.
+At *RST, this returns 0 V.
+","AWGCONTROL:DC1:VOLTAGE:OFFSET 1.0V sets the DC1 level to 1.0 V.
+AWGCONTROL:DC1:VOLTAGE:OFFSET? might return 1.00000000E+000.
+","This command and query sets or returns the DC output level.
+The value of n = 1|2|3|4.
+"
+Control,AWGControl:DOUTput[n][:STATe] <state>,AWGControl:DOUTput[n][:STATe]?,"<state>
+",,"<state>::= <Boolean>
+0 indicates OFF
+1 indicates ON
+At *RST, this returns 0.
+","AWGCONTROL:DOUTPUT1:STATE 1 causes the instrument to output raw DAC
+waveform from Channel 1.
+","This command enables the raw DAC waveform outputs for the specified channel.
+The query form of this command returns the status of raw DAC waveform output
+for the specified channel. When the state is ON, offset and filter settings for the
+channel are ignored.
+This command is not supported on the instruments with Option 02 or Option 06.
+"
+Control,AWGControl:ENHanced:SEQuence:JMODe <jump_mode>,AWGControl:ENHanced:SEQuence:JMODe?,"<jump_mode>
+",,"<jump_mode>::={LOGic|TABLe|SOFTware}
+LOGic or SOFTware activates Event Jump. The jump target defined in the
+sequence definition will be the target of Event Jump.
+TABLe activates Table Jump. The Table Jump definition is used as the jump target.
+At *RST, this returns LOGic.
+","AWGCONTROL:ENHANCED:SEQUENCE:JMODE TABLe sets the jump mode to
+Table.
+AWGCONTROL:ENHANCED:SEQUENCE:JMODE? might return TABL if the
+instrument is in the Table Jump mode.
+","This command and query sets or returns the jump mode.
+This command is available for the AWG5012B, AWG5000C, and AWG7000C
+with option 09. This command is provided for compatibility with the
+AWG400/500/600/700 series instruments.
+The query form will return TABL when the instrument is in the Table Jump mode,
+otherwise LOG will be returned.
+"
+Control,"AWGControl:EVENt:DJUMp:DEFine <event_pattern>,<jump_target>",AWGControl:EVENt:DJUMp:DEFine? <event_pattern>,,,"event_pattern::=<NR1>. The values ranges between 0 and 511. This
+parameter specifies the event pattern to make an event jump. The event bits are
+mapped to the integer value as follows:
+MSB LSB
+Event bits ?€??€??€? ?€??€??€? ?€??€?-8 76543210
+jump_target::=<NR1>. The values are ?€?1 and 1 to maximum sequence length.
+This parameter specifies the sequence index as the jump target. If ?€?1 is specified,
+the event jump for the specified <event_pattern> is cancelled.
+At *RST, all definitions are cancelled.
+","AWGCONTROL:EVENT:DJUMP:DEFINE 15,3 sets the jump target index to third
+sequence element for the event pattern 00001111.
+AWGCONTROL:EVENT:DJUMP:DEFINE? 15 might return 3.
+","This command associates an event pattern with the jump target for Dynamic Jump.
+The query returns the jump target associated to the specified <event_pattern>.
+"
+Control,AWGControl:EVENt:JMODe <jump_mode>,AWGControl:EVENt:JMODe?,,,"jump_mode::={EJUMp | DJUMp}
+EJUMp sets the Jump Mode to Event Jump. The jump targets defined
+in the sequence definition table will be used as the jump target. In this
+mode, the instrument behavior for the event jump is the same as that of the
+AWG7000/AWG5000 series.
+DJUMp sets the Jump Mode to Dynamic Jump. The Dynamic Jump target
+definitions are used as the jump target. This is also known as Table Jump.
+The jump command is always available in both the modes.
+At *RST, this returns EJUMp.
+","AWGCONTROL:EVENT:JMODE DJUMP sets the Jump Mode to Dynamic Jump.
+","This command and query sets or returns the event jump mode.
+"
+Control,AWGControl:EVENt:SOFTware[:IMMediate] <target>,,,,"<target>::=<NR1>
+","AWGCONTROL:EVENT:SOFTWARE:IMMEDIATE 10 forces the sequencer to jump
+to index number 10.
+","This command executes the sequencer jump to the specified element index.
+"
+Control,AWGControl:EVENt:TABLe[:IMMediate],,,,,"AWGCONTROL:EVENT:TABLE[:IMMEDIATE] generates an event signal for Table
+Jump.
+","This command forcibly generates an event in the Table Jump mode.
+This command is available for the AWG5012B, AWG5000C, and AWG7000C
+with option 09. If the instrument (with option 09) is not in the Table Jump mode,
+this command will generate a setting conflict error. To set the Jump mode, use the
+AWGControl:ENHanced:SEQuence:JMODe command.
+This command is provided for compatibility with the AWG400/500/600/700 series
+instruments. The same functionality can be invoked by the EVENt[:IMMediate]
+command.
+NOTE. The Table Jump definition cannot be created or edited using a remote
+command or the screen interface. The Table Jump definition is derived from the
+*.SEQ file. Refer to the User Online Help for more information on the Table
+Jump definition and SEQ file format.
+"
+Control,AWGControl:INTerleave:ADJustment:AMPLitude <NR3>,AWGControl:INTerleave:ADJustment:AMPLitude?,"<NR3>
+",,"<NR3>
+Range is between 0.5 Vpp to 1.0 Vpp when Zeroing is OFF.
+0.25 Vpp to 0.5 Vpp when Zeroing is ON.
+At *RST, this returns 0 Vpp.
+","AWGCONTROL:INTERLEAVE:ADJUSTMENT:AMPLITUDE 1 sets the interleave
+adjustment amplitude to 1 volts.
+AWGCONTROL:INTERLEAVE:ADJUSTMENT:AMPLITUDE? returns
+0.00000000E+000, indicating that the interleave adjustment amplitude is 0 volts.
+","This command and query sets or returns the interleave adjustment amplitude.
+This command is available only for Option 06. This setting is only valid when the
+interleave state is On.
+"
+Control,AWGControl:INTerleave:ADJustment:PHASe <NR3>,AWGControl:INTerleave:ADJustment:PHASe?,"<NR3>
+",,"<NR3>
+At *RST, this returns 0 degree.
+","AWGCONTROL:INTERLEAVE:ADJUSTMENT:PHASE 120 sets the interleave
+adjustment phase to 120 degrees.
+AWGCONTROL:INTERLEAVE:ADJUSTMENT:PHASE? returns 1.20000000E+002,
+indicating that the interleave adjustment phase is 120 degrees.
+","This command and query sets or returns the interleave adjustment phase.
+This command is available only for Option 06. This setting is only valid when the
+interleave state is On.
+"
+Control,AWGControl:INTerleave[:STATe] <state>,AWGControl:INTerleave[:STATe]?,"<state>
+",,"<state>::=<Boolean>
+0 indicates OFF
+1 indicates ON
+At *RST, this returns 0.
+","AWGCONTROL:INTERLEAVE:STATE 1 sets the instrument to interleave mode.
+","This command and query sets or returns the interleave state for channels. This is
+available only on the AWG7000 series with option 06 instruments.
+When Interleave is ON, the output of CH1 and CH2 are mixed at the output circuit
+to achieve twice the sampling rate. When interleave state is switched on, then:
+Sampling rate is set to the nearest valid value
+Waveform remains as before
+Sequence pointing to CH2 waveform becomes ?€?Empty?€?
+Channel count becomes 1
+Coupled channels lose the coupled state
+NOTE. Switching the interleave state from ON to OFF will not restore the
+sequence CH2 waveforms. Also once the coupled state is lost, it is not restored.
+Marker data cannot be interleaved.
+Only even marker data is output when the interleave state is ON.
+"
+Control,AWGControl:INTerleave:ZERoing <state>,AWGControl:INTerleave:ZERoing?,"<state>
+",,"<state>::=<Boolean>
+0 indicates OFF
+1 indicates ON
+At *RST, this returns 0.
+","AWGCONTROL:INTERLEAVE:ZEROING 1 turns on the zeroing function.
+","This command and query sets or returns the state for zeroing when in the
+interleave mode.
+NOTE. This command is available only on the AWG7000 series with option 06
+instruments.
+Setting Zeroing to ON will change the amplitude setting range when interleaving
+is done. When Zeroing is OFF, amplitude is not affected by the interleave state.
+Setting the zeroing state to ON is a trade-off between bandwidth and signal quality.
+"
+Control,AWGControl:RMODe {CONTinuous|TRIGgered|GATed|SEQuence|ENHanced},AWGControl:RMODe?,"CONT|TRIG|GAT|SEQ
+",,"CONTinuous sets Run Mode to Continuous.
+TRIGgered sets Run Mode to Triggered.
+GATed sets Run Mode to Gated.
+SEQuence sets Run Mode to Sequence.
+ENHanced is provided only for the compatibility with AWG400/500/600/700
+series. In the response, SEQ is returned even if ENH is specified in the command.
+At *RST, this value is CONTinuous.
+","AWGCONTROL:RMODE TRIGGERED sets the instrument Run mode to Triggered.
+AWGCONTROL:RMODE? returns CONT if the instrument is in continuous mode.
+The following table lists the run modes and their descriptions:
+Argument Description
+CONTinuous Selects the continuous mode, which continuously outputs
+the waveform. The external trigger, including the FORCE
+TRIGGER button and the corresponding remote commands,
+has no effect.
+TRIGgered Sets the triggered mode, which outputs one waveform cycle
+for each trigger.
+GATed Selects the gated mode, which continuously outputs the
+waveform or sequence as long as the trigger remains
+enabled. The trigger remains effective as long as any of
+the following events occur:
+The FORCE TRIGGER button remains pressed
+A valid external gate signal remains input
+The TRIGger[:SEQuence][:IMMediate] or
+*TRIG command has been executed but an ABORt
+command has not yet been issued
+SEQuence Selects the sequence mode, which outputs the waveform
+according to the sequence file specified with the
+SOURce:FUNCtion:USER command. If the sequence
+file is not loaded, this mode is the same as the triggered
+mode.
+","This command and query sets or returns the run mode of the arbitrary waveform
+generator.
+"
+Control,AWGControl:RRATe <repetition_rate>,AWGControl:RRATe?,"<NR3>
+",,"<repetition_rate>::=<NR3>
+At *RST, this value is 10 MHz.
+","AWGCONTROL:RRATE 1000000 sets the repetition rate to 1MHz.
+AWGCONTROL:RRATE? returns 1E+6.
+","This command and query sets or returns the repetition rate of the arbitrary
+waveform generator.
+"
+Control,AWGControl:RRATe:HOLD <hold_state>,AWGControl:RRATe:HOLD?,"<NR1>
+",,"<hold_state>::=<Boolean>
+0 indicates OFF
+1 indicates ON
+At *RST, this returns 0.
+","AWGCONTROL:RRATE:HOLD 1 sets the instrument repetition rate to Hold.
+","This command and query sets or returns the hold property of repetition rate.
+Setting this to ON keeps the repetition rate of the instrument constant even when
+the waveform size changes. This causes the sampling rate to change. When this is
+OFF, the repetition rate changes when the waveform length changes.
+"
+Control,AWGControl:RSTate?,,"<NR1>
+0 indicates that the instrument has stopped.
+1 indicates that the instrument is waiting for trigger.
+2 indicates that the instrument is running.
+",,,"AWGCONTROL:RSTATE? might return 0 if the instrument waveform generation is
+stopped.
+","This query returns the run state of the arbitrary waveform generator or the
+sequencer.
+"
+Control,AWGControl:RUN[:IMMediate],,,,,"AWGCONTROL:RUN puts the instrument in the run state.
+","This command initiates the output of a waveform or a sequence. This is equivalent
+to pressing Run/Stop button on the front panel. The instrument can be put in the
+run state only when output waveforms are assigned to channels.
+"
+Control,AWGControl:SEQuencer:POSition?,,"<NR1>
+At *RST, this value is 1.
+",,,"AWGCONTROL:SEQUENCER:POSITION? might return 100.
+","This query returns the current position of the sequencer.
+"
+Control,AWGControl:SEQuencer:TYPE?,,"HARDware indicates that the instrument is in the hardware sequencer mode.
+SOFTware indicates that the instrument is in the software sequencer mode.
+At *RST, this value is HARDware.
+",,,"AWGCONTROL:SEQUENCER:TYPE? might return HARD if the instrument is in
+the hardware sequencer mode.
+","This query returns the type of the arbitrary waveform generator?€?s sequencer. The
+sequence is executed by the hardware sequencer whenever possible.
+"
+Control,AWGControl:SNAMe?,,"<file_name>,<msus>
+<file_name>::=<string>
+<msus> (mass storage unit specifier)::=<string>
+At *RST, this values is ?€??€?,?€?C:?€?
+",,,"AWGCONTROL:SNAME? might return the following response:
+?€?\my\project\awg\setup\a1.awg?€?,?€?D:?€?
+","This query returns the current setup file name of the arbitrary waveform generator.
+The response contains the full path for the file including the disk drive.
+"
+Control,"AWGControl:SREStore <file_name>[,<msus>]",,,,"<file_name>::=<string>
+<msus> (mass storage unit specifier)::=<string>
+","AWGCONTROL:SRESTORE ?€?Setup1.Awg?€?
+","This command restores the arbitrary waveform generator?€?s setting from a specified
+settings file. The drive may be a local or a network drive. If the full path is not
+specified, the file will be stored in the current path.
+"
+Control,"AWGControl:SSAVe <file_name>[,<msus>]",,,,"<file_name>::=<string>
+<msus> (mass storage unit specifier)::=<string>
+","AWGCONTROL:SSAVE ?€?\my\project\awg\setup\x.awg?€?,?€?D:?€? will save
+the current setup to ?€?D:\my\project\awg\setup\x.awg?€?.
+","This command saves the arbitrary waveform generator?€?s setting to a specified
+settings file. The drive may be a local or a network drive. If full path is not
+specified, the file will be stored in the current path.
+"
+Control,AWGControl:STOP[:IMMediate],,,,,"AWGCONTROL:STOP:IMMEDIATE stops the output of a waveform.
+","This command stops the output of a waveform or a sequence.
+"
+Calibration,*CAL?,,"<NR1>
+0 indicates no error.
+",,,"*CAL? performs an internal calibration and returns results. For example, it might
+return 0, which indicates that the calibration completed without any errors.
+","This query does an internal calibration of the arbitrary waveform generator and
+returns a status that indicates whether the calibration was completed successfully.
+"
+Calibration,CALibration[:ALL],CALibration[:ALL]?,"<calibration error code> ::= <NR1>
+0 indicates no error
+?€?340: error
+",,,"CALIBRATION:ALL performs an internal calibration.
+CALIBRATION:ALL? performs an internal calibration and returns results. For
+example, it might return 0, which indicates that the calibration completed without
+any errors.
+","This command does a full calibration of the arbitrary waveform generator. In its
+query form, the command does a full calibration and returns a status indicating
+the success or failure of the operation. CALibration[:ALL]? is equivalent
+to *CAL?
+"
+Status,*CLS,,,,,"*CLS clears all the event registers and queues.
+","This command clears all event registers and queues.
+"
+Diagnostic,DIAGnostic:DATA?,,"<NR1>
+0 indicates no error.
+?€?330 indicates that the self test failed.
+",,,"DIAGNOSTIC:DATA? might return 0, which indicates that the diagnostics
+completed without any errors.
+","This command returns the results of a self test.
+"
+Diagnostic,DIAGnostic[:IMMediate],DIAGnostic[:IMMediate]?,"<NR1>
+0 indicates no error.
+?€?330 indicates that the self test failed.
+",,,"DIAGNOSTIC:IMMEDIATE executes the self test routines.
+DIAGNOSTIC:IMMEDIATE? executes the self test routines. After the self test
+routines finish, the results of the self tests are returned.
+","This command executes the selected self-test routines. The query form of this
+command executes the selected self-test routines and returns the results.
+"
+Diagnostic,DIAGnostic:SELect {ALL|FPANel|AREGister|DTIMing|A1Memory|A2Memory|A3Memory| A4Memory|CREGister|CPLock|O1Register|O1ALevel|O1MLevel| O2Register|O2ALevel|O2MLevel},DIAGnostic:SELect?,"ALL|FPAN|AREG|DTIM|A1M|A2M|A3M|A4M|CREG|CPL|O1R|O1AL|O1ML|
+O2R|O2AL|O2ML
+",,,"DIAGNOSTIC:SELECT FPANEL selects the front panel read/write access test.
+","This command selects the self-test routines. The query form of this command
+returns the selected test routine.
+The following selections are available:
+ALL
+FPANel - Front panel read/write access test
+DTIMing ?€? Data timing measurement (for AWG5000 series only)
+AREGister ?€? AWG register read back
+A1Memory ?€? CH1 waveform memory test
+A2Memory ?€? CH2 waveform memory test
+A3Memory ?€? CH3 waveform memory test (for AWG5000 series only)
+A4Memory ?€? CH4 Waveform memory test (for AWG5000 series only)
+CREGister ?€? Clock register read back
+CPLock ?€? PLL Lock/unlock
+O1Register ?€? Output1 register read back
+O1ALevel ?€? Output1 analog level
+O1MLevel ?€? Output1 Marker level (for AWG7000 series only)
+O2Register ?€? Output2 register read back
+O2ALevel ?€? Output2 analog level
+O2MLevel ?€? Output2 marker level (for AWG7000 series only)
+NOTE. Some of the selections are not available depending on the available
+options and the number of channels.
+"
+Display,DISPlay[:WINDow[1|2]][:STATe] <display_state>,DISPlay[:WINDow[1|2]][:STATe]?,"<NR1>
+",,"<display_state>::=<Boolean>
+0 indicates False, minimizes the window display.
+1 indicates True, restores the window display.
+At *RST, this value is 0 for window1 and 1 for window2.
+","DISPLAY:WINDOW1:STATE 0 minimizes the sequence window.
+","This command minimizes or restores the sequence or waveform window of the
+arbitrary waveform generator. This command only minimizes or restores the
+display area; it does not close the window. There is no maximizing.
+WINDow1 ?€? Sequence window
+WINDow2 ?€? Waveform window
+"
+Status,*ESE <NR1>,*ESE?,"<NR1>
+",,"<NR1>
+","*ESE 177 sets the ESER to 177 (binary 10110001), which sets the PON, CME,
+EXE and OPC bits.
+","This command sets or queries the status of Event Status Enable Register.
+"
+Status,*ESR?,,"<NR1>
+",,,"*ESR? might return 181, which indicates that the SESR contains the binary
+number 10110101.
+","This query returns the status of Standard Event Status Register.
+"
+Event,EVENt[:IMMediate],,,,,"EVENT:IMMEDIATE generates the event signal.
+","This command generates a forced event. This is used to generate
+the event when the sequence is waiting for an event jump (See
+SEQuence:ELEMent[n]:JTARget:TYPE).
+This is equivalent to pressing the Force Event button on the front panel of the
+instrument.
+"
+Event,EVENt:IMPedance <ohms>,EVENt:IMPedance?,"<NR3>
+",,"<ohms>::=<NR3>
+Valid values are 50 ohm or 1 kohm.
+At *RST, this value is 1e3 ohm.
+","EVENT:IMPEDANCE 50 sets the impedance to 50 ohms.
+","This command and query sets or returns the impedance of the external event input.
+Valid values are 50 ohm or 1 kohm.
+"
+Event,EVENt:JTIMing <jump_type>,EVENt:JTIMing?,"SYNC|ASYN
+",,"<jump_type>::={SYNChronous|ASYNchronous}
+SYNChronous indicates jump occurs immediately.
+ASYNchronous indicates jump occurs after the signal generation is finished.
+At *RST, this returns ASYNchronous.
+","EVENT:JTIMING ASYNCHROUNOUS sets the jump to asynchronous type.
+","This command and query sets or returns the jump timing. Refer to the User Online
+Help for more information on jump timing.
+"
+Event,EVENt:LEVel <level>,EVENt:LEVel?,"<NR3>
+",,"<level>::=<NR3>
+Range is between 5 V and ?€?5 V.
+At *RST, this returns 1.4 V
+","EVENT:LEVEL 1.0V sets the level to 1 volt.
+","This command and query sets or returns the event level.
+"
+Event,EVENt:POLarity {POSitive|NEGative},EVENt:POLarity?,"POS|NEG
+",,"POSitive indicates that event jump occurs when the instrument receives a
+positive pulse.
+NEGative indicates that event jump occurs when the instrument receives a
+negative pulse.
+At *RST, this returns POSitive.
+","EVENT:POLARITY NEGATIVE sets the event polarity to negative.
+","This command and query sets or returns the polarity of event signal. The Event
+Jump is the function to change the sequencing of the waveform by an event signal.
+"
+System,*IDN?,,"<Manufacturer>, <model>, <serial number>, <Firmware version>
+<Manufacturer>:: = TEKTRONIX
+<Model>:: = AWG7122C, AWG7082C, AWG7121B, AWG7122B, AWG7061B,
+AWG7062B, AWG5012C, AWG5014C, AWG5002C, AWG5012B, AWG5014B,
+AWG5002B, AWG5004B
+<Serial number>:: = XXXXXXX (indicates an actual serial number)
+<Firmware version>:: = SCPI: 99.0 FW:x.x.x.x (x.x.x.x is system software
+version)
+",,,"*IDN? might return the following response:
+TEKTRONIX,AWG7122B,B010123,SCPI:99.0 FW:3.0.136.602
+","This command returns identification information for the arbitrary waveform
+generator.
+"
+Instrument,INSTrument:COUPle:SOURce <state>,INSTrument:COUPle:SOURce?,"<state>
+",,"<state>::={NONE|PAIR|ALL}
+NONE
+PAIR ?€? CH1 to CH2 and CH3 to CH4
+ALL ?€? CH1 to CH2, CH3, and CH4
+","INSTRUMENT:COUPLE:SOURCE ALL couples the CH1 parameters and CH2
+parameters if the instrument is a two-channel model.
+","This command and query sets or returns the coupled state for a channel.
+NOTE. When coupling is done, CH1 can be coupled to CH2, CH3 and CH4. CH3
+can be coupled to CH4. Other combinations are not allowed.
+When ALL is used, all other channels get the parameters of CH1.
+When coupling is done, CH1 parameters are copied to CH2 parameters and CH3
+parameters to CH4 parameters. This cannot be changed.
+On two channel models, ALL is equivalent to PAIR.
+On one channel models, only NONE is available.
+In four channel models when PAIR is used, CH1 is coupled to CH2 and CH3 is
+coupled to CH4 in one action. Not all parameters are coupled.
+When the coupling is active, setting the coupling state to NONE will remove
+the coupling.
+"
+Mass memory,MMEMory:CATalog? [<msus>],,"<NR1>,<NR1>[,<file_entry>]
+The first <NR1> indicates the total amount of storage currently used in bytes.
+The second <NR1> indicates the free space of mass storage in bytes.
+<file_entry>>::= ?€?<file_name>,<file_type>,<file_size>?€?
+<file_name>:: = is the exact name of the file.
+<file_type>::= is DIR for directory, otherwise it is blank.
+<file_size>::=<NR1> is the size of the file in bytes.
+",,"<msus> (mass storage unit specifier)::=<string>
+","MMEMORY:CATALOG? might return the following response:
+484672,3878652,""SAMPLE1.AWG,,2948""
+""aaa.txt,,1024"",""ddd,DIR,0"",""zzz.awg,,2948""
+","This query returns the current contents and state of the mass storage media.
+"
+Mass memory,MMEMory:CDIRectory [<directory_name>],MMEMory:CDIRectory?,"<directory_name>
+",,"<directory_name>::=<string>
+","MMEMORY:CDIRECTORY ""/AWG/WORK0"" changes the current directory to
+/AWG/WORK0.
+","This command and query sets or returns the current directory of the file system
+on the arbitrary waveform generator. The current directory for the programmatic
+interface is different from the currently selected directory in the Windows
+Explorer on the instrument.
+"
+Mass memory,"MMEMory:DATA <file_name>,<block_data>",MMEMory:DATA? <file_name>,"Block_data ?€? IEEE 488.2 data block
+file_name ?€? string having file name and path.
+",,"<file_name>,<block_data>
+","MMEMORY:DATA ""FILE1"",#41024XXXXX... loads data into the file FILE1.
+","This command and query sets or returns block data to/from the file in the current
+mass storage device.
+NOTE. The file is always transferred to the path mentioned along with the file
+name on the target.
+If no path is specified with the file name, the current directory is used.
+When path contains only the file name, current path is assumed.
+This command has a limit of 650,000,000 bytes of data. If this limit is insufficient,
+consider the following alternatives:
+Use a more efficient file encoding (WFM or PAT) when sending data.
+Use instrument commands for direct control (WLISt:WAVeform:DATA,
+FREQ, VOLT, and so on).
+Use Ethernet (ftp, http, or file sharing) to transfer the file.
+"
+Mass memory,"MMEMory:DELete <file_name>[,<msus>]",,,,"<file_name>::=<string>
+<msus> (mass storage unit specifier)::=<string>
+","MMEM:DEL ?€?SETUP1.AWG?€? deletes SETUP1.AWG in the current directory.
+MMEM:DEL ?€?\my\proj\awg\test.awg?€?,?€?D:?€? deletes
+D:\my\proj\awg\test.awg, regardless of the current directory
+and the current msus.
+","This command deletes a file or directory from the instrument?€?s hard disk. When
+used on a directory, this command succeeds only if the directory is empty.
+"
+Mass memory,"MMEMory:IMPort <wfm_name>,<filename>,<type>",,,,"<wfm_name>,<filename>,<type>
+<wfm_name>::=<string>
+<filename>::=<string>
+<type> = {ISF|TDS|TXT|TXT8|TXT10|TXT14|WFM|PAT|TFW}
+","MMEMORY:IMPORT ""sine1024"",""sine1024.txt"",txt imports a waveform
+file named ""sine1024"", whose file format is text with normalized analog value.
+","This command imports a file into the arbitrary waveform generator?€?s setup as
+a waveform.
+NOTE. If the waveform name already exists, it will be overwritten without
+warning.
+The file name can contain a path and drive letter.
+The supported file formats are:
+ISF ?€? TDS3000 and DPO4000 waveform format
+TDS ?€? TDS5000/TDS6000/TDS7000, DPO7000/DPO70000/DSA70000 Series
+waveform
+TXT ?€? Text file with analog data
+TXT8 ?€? Text file with 8-bit DAC resolution
+TXT10 ?€? Text file with 10-bit DAC resolution
+TXT14 ?€? Text file with 14-bit DAC resolution
+WFM ?€? AWG400/AWG500/AWG600/AWG700 Series waveform
+PAT ?€? AWG400/AWG500/AWG600/AWG700 Series pattern file
+TFW ?€? AFG3000 Series waveform file format
+IQT ?€? RSA3000 Series waveform file format
+TIQ ?€? RSA6000 Series waveform file format
+"
+Mass memory,MMEMory:IMPort:PARameter:FREQuency[:UPDate][:STATe] <state>,MMEMory:IMPort:PARameter:FREQuency[:UPDate][:STATe]?,"<state>
+",,"<state>::=<Boolean>
+0 indicates OFF
+1 indicates ON
+At *RST, this returns 1.
+","MMEMORY:IMPORT:PARAMETER:FREQUENCY:UPDATE:STATE 1 the instrument
+will automatically modify the sampling rate when importing the waveform data.
+","This command sets or queries the FREQuency parameter which determines
+whether frequency is modified during waveform import. If this value is set, the
+sampling rate is automatically updated during waveform import.
+"
+Mass memory,MMEMory:IMPort:PARameter:LEVel[:UPDate]:CHANnel <NR1>,MMEMory:IMPort:PARameter:LEVel[:UPDate]:CHANnel?,"1|2|3|4
+",,"<NR1>
+At *RST, the value is 1.
+","MMEMORY:IMPORT:PARAMETER:LEVEL:UPDATE:CHANNEL 1 sets the channel 1
+amplitude and offset values to be updated when importing waveform data.
+","This command sets or queries the channel for which the amplitude and offset
+values will be updated during import.
+NOTE. Channel number starts from 1 for CH1, 2 for CH2
+Valid input depends on model number and interleave state
+This command is effective only when MMEMory:IMPort:PARameter:LEVel[:
+UPDate][:STATe] is set to 1
+"
+Mass memory,MMEMory:IMPort:PARameter:LEVel[:UPDate][:STATe] <state>,MMEMory:IMPort:PARameter:LEVel[:UPDate][:STATe]?,"<Boolean>
+",,"<state>::=<Boolean>
+0 indicates OFF
+1 indicates ON
+At *RST, this returns 1.
+","MMEMORY:IMPORT:PARAMETER:LEVEL:UPDATE:STATE 1 the instrument will
+automatically modify the amplitude and offset when importing the waveform data.
+","This command sets or queries the LEVel parameter which determines whether
+amplitude and offsets are modified during waveform import. If this value is set,
+the instrument amplitude and offset are automatically updated during waveform
+import.
+"
+Mass memory,MMEMory:IMPort:PARameter:LEVel[:UPDate]:TYPE <Type>,MMEMory:IMPort:PARameter:LEVel[:UPDate]:TYPE?,"IDAT|QDAT
+",,"<Type>::={IDATa|QDATa}
+IDATa indicates that the instrument imports I data.
+QDATa indicates that the instrument imports Q data.
+At *RST, the value is IDATa.
+","MMEMORY:IMPORT:PARAMETER:LEVEL:UPDATE:TYPE IDATA sets I data to be
+imported while importing an RSA file.
+","This commands sets or queries the data to be imported. It also sets or queries
+which data?€?s amplitude and offset values are selected for update during RSA
+file import.
+This command is effective only when MMEMory:IMPort:PARameter:LEVel[:
+UPDate][:STATe] is set to True and IQT or TIQ is selected as the <Type> for the
+MMEMory:IMPort command.
+"
+Mass memory,MMEMory:IMPort:PARameter:NORMalize {NONE|FSCale|ZREFerence},MMEMory:IMPort:PARameter:NORMalize?,"NONE|FSC|ZREF
+",,"<Normalization_type>
+NONE indicates that the imported data is not normalized.
+FSCale indicates that the imported data is normalized with full DAC range.
+ZREFerence indicates that the imported data is normalized with offset preserved.
+At *RST, this returns NONE.
+","MMEMORY:IMPORT:PARAMETER:NORMALIZE NONE will not normalize the
+imported data.
+","This command sets or queries if the imported data is normalized during text data
+import operation.
+The imported waveform data is normalized based on the option set in this
+command.
+When ZREFerence is selected, the offset is preserved during normalization
+operation.
+If FSCale is selected, offset is lost and full scale of the DAC is used for
+normalization.
+NONE will not normalize the data.
+"
+Mass memory,MMEMory:IMPort:PARameter:RESampling:FREQuency <NR3>,MMEMory:IMPort:PARameter:RESampling:FREQuency?,"<NR3>
+",,"<NR3>
+At *RST, this returns the maximum sampling rate for the non-interleaved mode.
+","MMEMORY:IMPORT:PARAMETER:RESAMPLING:FREQUENCY 1.2E+9 sets the
+resampling frequency to 1.2 GHz.
+","This command sets or queries the sampling rate parameter for resampling. The
+specified sampling rate is applied to imported waveform.
+NOTE. This command will take effect only when the MMEMory:IMPort:
+PARameter:FREQuency[:UPDate][:STATe] command is set to True.
+Resampling setting is ignored if the MMEMory:IMPort:PARameter:FREQuency[:
+UPDate][:STATe] command is set to False.
+"
+Mass memory,MMEMory:IMPort:PARameter:RESampling[:STATe] <state>,MMEMory:IMPort:PARameter:RESampling[:STATe]?,"<Boolean>
+",,"<state>::=<Boolean>
+0 indicates False
+1 indicates True
+At *RST, this returns 0.
+","MMEMORY:IMPORT:PARAMETER:FREQUENCY:UPDATE:STATE 1 invokes
+resampling automatically.
+","This command sets or queries the resampling state for waveform import. This
+command is effective only when the following conditions are met:
+Waveform data to be imported must have sampling rate information.
+MMEMory:IMPort:PARameter:FREQuency[:UPDate][:STATe] command
+must be set to True.
+Use this command to set the resampling state on or off. If you set the resampling
+state on, resampling is automatically invoked when importing waveform data.
+The query form of this command returns the resampling state of the instrument.
+"
+Mass memory,MMEMory:MDIRectory <directory_name>,,,,"<directory_name>::=<string> specifies a new directory.
+","MMEMORY:MDIRECTORY ""WAVEFORM"" makes the directory ?€?WAVEFORM?€?.
+","This command creates a new directory in the current path on the mass storage
+system.
+"
+Mass memory,MMEMory:MSIS [<msus>],MMEMory:MSIS?,"<msus> (mass storage unit specifier)::=<string>
+At *RST, this values is ?€?C:?€?
+",,"<msus> (mass storage unit specifier)::=<string>
+","MMEMORY:MSIS? might return the following response: ?€?X:?€?
+","This command and query selects or returns a mass storage device used by all
+MMEMory commands. <msus> specifies a drive using a drive letter. The drive
+letter can represent hard disk drives, network drives, DVD/CD-RW drives, or
+USB memory.
+"
+Synchronization,*OPC,*OPC?,"<NR1>
+<NR1>=1 when all pending operations are finished.
+",,,"*OPC? might return 1 to indicate that all pending OPC operations are finished.
+","This command is used to ensure that the first command is complete before the
+second command is issued. Always returns one on this instrument.
+"
+System,*OPT?,,"<opt>[, <opt> [, <opt>] ] ]
+<opt>::= {0|01|02|03|06|08}
+",,,"*OPT? might return 0 to indicate that no option is installed in the instrument.
+","This command returns the implemented options for the arbitrary waveform
+generator.
+"
+Output,OUTPut[n]:FILTer[:LPASs]:FREQuency {<NR3>|INFinity},OUTPut[n]:FILTer[:LPASs]:FREQuency?,"<NR3>
+",,"<NR3>
+At *RST, this value returns 9.9e37 (INFinity).
+","OUTPUT1:FILTER:LPASS:FREQUENCY 200MHZ sets the cutoff frequency of the
+low-pass filter for CH 1 to 200 MHz.
+","This command and query sets or returns the low-pass filter frequency of the
+filter. INFinity is same as Through (no filter). This command is not available on
+instruments with option 02 or option 06.
+"
+Output,OUTPut[n][:STATe] <output_state>,OUTPut[n][:STATe]?,"<NR1>
+",,"<output_state>::=<Boolean>
+0 sets the channel output to False (OFF)
+1 sets the channel output to True (ON)
+At *RST, this returns 0.
+","OUTPUT1:STATE ON turns the channel 1 output on.
+","This command and query sets or returns the output state of the arbitrary waveform
+generator. Setting the output state of a channel to ON will switch on its analog
+output signal and marker.
+"
+System,*RST,,,,,"*RST resets the instrument.
+","This command resets the arbitrary waveform generator to its default state.
+"
+Sequence,SEQuence:ELEMent[n]:GOTO:INDex <target>,SEQuence:ELEMent[n]:GOTO:INDex?,"<target>
+",,"<target>::=<NR1>
+","SEQUENCE:ELEMENT1:GOTO:INDEX 6 causes the sequencer to jump to sixth
+element after executing the first element.
+SEQUENCE:ELEMENT1:GOTO:INDEX? might return 6.
+","This command and query sets or returns the target index for the GOTO command
+of the sequencer.
+After generating the waveform specified in a sequence element, the sequencer
+jumps to the element specified as GOTO target. This is an unconditional jump. If
+GOTO target is not specified, the sequencer simply moves on to the next element.
+If the Loop Count is Infinite, the GOTO target which is specified in the element is
+not used. For this command to work, the SEQuence:ELEMent[n]:GOTO:STATe
+must be ON and the sequence element must exist.
+Note that the first element of a sequence is taken to be 1 not 0.
+"
+Sequence,SEQuence:ELEMent[n]:GOTO:STATe <goto_state>,SEQuence:ELEMent[n]:GOTO:STATe?,"<NR1>
+",,"<goto_state>::=<Boolean>
+0 indicates OFF
+1 indicates ON
+At *RST, this returns 0.
+The value of <n> is an index number of sequence.
+","SEQUENCE:ELEMENT1:GOTO:STATE 1 sets the GOTO state to ON.
+","This command and query sets or returns the GOTO state of the sequencer. For
+the SEQuence:ELEMent[n]:GOTO:INDex command to take effect, the GOTO
+state must be set to ON.
+"
+Sequence,SEQuence:ELEMent[n]:JTARget:INDex <target>,SEQuence:ELEMent[n]:JTARget:INDex?,"<NR1>
+",,"<target>::=<NR1>
+<n> is an index number of sequence.
+","SEQUENCE:ELEMENT1:JTARGET:INDEX 10 sets the jump target index to 10th
+element.
+","This command and query sets or returns the target index for the
+sequencer?€?s event jump operation. Note that this will take effect only when
+SEQuence:ELEMent[n]:JTARget:TYPE is set to INDex.
+"
+Sequence,SEQuence:ELEMent[n]:JTARget:TYPE {INDex|NEXT|OFF},SEQuence:ELEMent[n]:JTARget:TYPE?,"IND|NEXT|OFF
+",,"INDex. This enables the sequencer to jump to an index set using
+SEQuence:ELEMent1:JTARget:INDex command.
+NEXT. This enables the sequencer to jump to the next sequence element.
+SEQuence:ELEMent1:JTARget:INDex setting is ignored.
+OFF. This enables the sequencer to turn off the event jump state. In this state, even
+if the event occurs, the sequencer ignores it.
+AT *RST, this value is OFF.
+The value of n is an index number of sequence.
+","SEQUENCE:ELEMENT1:JTARGET:TYPE INDEX sets the jump target to INDex.
+","This command and query sets or returns the event jump target type for the jump.
+Generate an event in one of the following ways:
+By connecting an external cable to instrument rear panel for external event.
+By pressing the Force Event button on the front panel.
+By sending the EVENt[:IMMediate] remote command.
+"
+Sequence,SEQuence:ELEMent[n]:LOOP:COUNt <NR1>,SEQuence:ELEMent[n]:LOOP:COUNt?,"<NR1>
+",,"<NR1>
+The value ranges between 1 and 65,536.
+At *RST, this returns 1.
+The value of n is an index number of sequence.
+","SEQUENCE:ELEMENT:LOOP:COUNT 100 sets the element loop count to 100.
+","This command and query sets or returns the loop count. Loop count setting for an
+element is ignored if SEQuence:ELEMent[n]:LOOP:INFinite is set to ON.
+"
+Sequence,SEQuence:ELEMent[n]:LOOP:INFinite <loop_state>,SEQuence:ELEMent[n]:LOOP:INFinite?,"<NR1>
+",,"<loop_state>::=<Boolean>
+0 indicates OFF
+1 indicates ON
+At *RST, this returns 0.
+The value of <n> is an index number of sequence.
+","SEQUENCE:ELEMENT1:LOOP:INFINITE 1 sets the infinite flag to ON.
+","This command and query sets or returns the infinite looping state for a
+sequence element. When an infinite loop is set on an element, the sequencer
+continuously executes that element. To break the infinite loop, either issue
+the AWGControl:STOP[:IMMediate] command or change the run mode to
+Continuous by using AWGControl:RMODe command.
+"
+Subsequence,SEQuence:ELEMent[n]:SUBSequence <subseq_name>,SEQuence:ELEMent[n]:SUBSequence?,"<subseq_name>
+",,"<subseq_name>::=<string>
+","SEQUENCE:ELEMENT10:SUBSEQUENCE ?€?MYTEST?€? inserts the subsequence
+named ?€?mytest?€? at array position 10 of the main sequence.
+SEQUENCE:ELEMENT10:SUBSEQUENCE? might return ?€?mytest?€?, which
+indicates the sequence name.
+","This command and query sets or returns the subsequence for a sequence element.
+The AWG5012B, AWG5000C, and AWG7000C (option 09) series instruments
+support Subsequence.
+The subsequence name can be a null string (?€??€?). When a waveform is assigned to
+this sequence, the command returns ?€??€?.
+"
+Sequence,SEQuence:ELEMent[n]:TWAit <Boolean>,SEQuence:ELEMent[n]:TWAit?,"<NR1>
+",,"<wait_trigger_state>::=<Boolean>
+0 indicates OFF
+1 indicates ON
+At *RST, this returns 0.
+In the OFF state, the sequencer ignores trigger signals.
+The value of <n> is an index number of sequence.
+NOTE. The instrument without option 08 always sets Wait Trigger On. Trying to
+set the wait trigger state to off in an instrument without option 08 will cause
+an error.
+","SEQUENCE:ELEMENT1:TWAIT 1 sets the wait trigger state to ON.
+","This command and query sets or returns the wait trigger state for an element.
+Send a trigger signal in one of the following ways:
+By using an external trigger signal.
+By pressing the ?€?Force Trigger?€? button on the front panel.
+By sending the *TRG remote command.
+"
+Sequence,SEQuence:ELEMent[n]:WAVeform[m] [1|2|3|4] <wfm_name>,SEQuence:ELEMent[n]:WAVeform[m] [1|2|3|4]?,"<wfm_name>
+",,"<wfm_name>::=<string>
+","SEQUENCE:ELEMENT1:WAVEFORM1 ?€?*TRIANGLE1000?€? sets the
+?€?*Triangle1000?€? waveform into the first element of the sequence.
+SEQUENCE:ELEMENT20:WAVEFORM1? might return ?€?*Sine1000?€? indicating that
+the waveform named *Sine1000 is assigned to index number 20 of the channel 1
+sequence.
+","This command and query sets or returns the waveform for a sequence element.
+NOTE. The value of n indicates index number of sequence.
+The value of m = 1|2|3|4 is based on the model. If the suffix is omitted, 1 is
+assumed.
+The value of m indicates the channel that will output the waveform when the
+sequence is run.
+The length of all the waveforms specified for a sequence element must be equal.
+"
+Sequence,SEQuence:JUMP[:IMMediate] <target>,,,,"<target>::=<NR1>
+","SEQUENCE:JUMP:IMMEDIATE 10 forces the sequencer to jump to index number
+10.
+","This command forces the sequencer to jump to the specified element index. This
+is called a Force jump. This command does not require an event for executing the
+jump. Also, the Jump target specified for event jump is not used here.
+"
+Sequence,SEQuence:LENGth <NR1>,SEQuence:LENGth?,"<NR1>
+",,"<NR1>
+At *RST, this returns 0.
+","SEQUENCE:LENGTH 10 creates a sequence of 10 elements initializing all
+sequence parameters to default values.
+SEQUENCE:LENGTH? will now return 10.
+SEQUENCE:LENGTH 12 will append two elements to the end of the above created
+sequence and initialize the new elements?€? parameters. However, it does not
+change the already existing elements.
+SEQUENCE:LENGTH 0 will delete the sequence.
+","This command and query sets or returns the sequence length. Use this command
+to create an uninitialized sequence. You can also use the command to clear all
+sequence elements in a single action by passing 0 as the parameter. However, this
+action cannot be undone so exercise necessary caution. Also note that passing a
+value less than the sequence?€?s current length will cause some sequence elements
+to be deleted at the end of the sequence. For example if SEQuence:LENGth?
+returns 200 and you subsequently send SEQuence:LENGth 21, all sequence
+elements except the first 20 will be deleted.
+"
+Subsequence,SLISt:NAME? <Index>,,"<NR1>
+",,"<Index>::=<NR1>
+","SLIST:NAME? 3 returns the name of the third subsequence in the subsequence list
+provided the subsequence list has three or more elements.
+","The query returns the name of the subsequence corresponding to the specified
+index in the subsequence list.
+"
+Subsequence,SLISt:SIZE?,,"<NR1>
+",,,"SLIST:SIZE? returns the number of existing subsequences.
+","This query returns the size of the subsequence list.
+"
+Subsequence,SLISt:SUBSequence:DELete {<subseq_name>|ALL},SLISt:SUBSequence:DELete?,,,"<subseq_name>::=<string>
+","SLIST:SUBSEQUENCE:DELETE ALL deletes all the subsequence from the
+currently loaded setup. The ALL parameter does not delete predefined waveforms.
+SLIST:SUBSEQUENCE:DELETE ?€?MYTEST?€? deletes the subsequence named
+?€?mytest?€?.
+","This command deletes the subsequence from the currently loaded setup.
+NOTE. The subsequence will be deleted even if it is a part of the sequence.
+When a subsequence is deleted in the main sequence, the string ?€?EMPTY?€? will
+replace the previous subseq_name.
+When you specify ALL, all the subsequences in the subsequence list are deleted
+in a single action.
+"
+Subsequence,"SLISt:SUBSequence:ELEMent[n]:LOOP:COUNt <subseq_name>,<NR1>",SLISt:SUBSequence:ELEMent[n]:LOOP:COUNt? <subseq_name>,"<NR1>
+",,"<NR1>
+At *RST, this returns 0.
+","SLIST:SUBSEQUENCE:ELEMENT5:LOOP:COUNT ?€?MYTEST?€?,11 sets the loop
+count for the index element five of the subsequence named ?€?mytest?€? to 11.
+SLIST:SUBSEQUENCE:ELEMENT5:LOOP:COUNT? ?€?MYTEST?€? might return 11,
+which indicates that the loop count for the index element five of the sequence
+named ?€?mytest?€? is set to 11.
+","This command and query sets or returns the loop count for the specified
+subsequence element. The loop count is an integer.
+"
+Subsequence,"SLISt:SUBSequence:ELEMent[n]:WAVeform[n] <subseq_name>,<wfm_name>",SLISt:SUBSequence:ELEMent[n]:WAVeform[n]? <subseq_name>,"<wfm_name>
+",,"<subseq_name>::=<string>
+<wfm_name>::=<string>
+","SLIST:SUBSEQUENCE:ELEMENT5:WAVEFORM2 ?€?MYTEST?€?,?€?*SINE360?€? sets
+the waveform ?€?*Sine360?€? to the fifth index element of the CH2 subsequence
+named ?€?mytest?€?.
+SLIST:SUBSEQUENCE:ELEMENT5:WAVEFORM2? ?€?MYTEST?€? might return
+?€?*Sine360?€?, which indicates that the waveform named ?€?*Sine360?€? is assigned to
+index element five of the CH2 subsequence named ?€?mytest?€?.
+","This command and query sets or returns the waveform for an element of the
+subsequence.
+The value of n = 1 | 2 | 3 | 4 based on the model. If suffix is not specified, the
+value of n is 1.
+The value of ?€?n?€? indicates which channel will output the waveform when the
+sequence is run.
+NOTE. The waveform name can be a null string (?€? ?€?). However, a sequence with
+?€? ?€? as one of its elements cannot be run.
+"
+Subsequence,"SLISt:SUBSequence:LENGth <subseq_name>,<NR1>",SLISt:SUBSequence:LENGth? <subseq_name>,"<NR1>
+",,"<subseq_name>::=<string>
+","SLIST:SUBSEQUENCE:LENGTH ?€?MYTEST?€?,101 changes the length of the
+subsequence named ?€?mytest?€? to 101.
+SLIST:SUBSEQUENCE:LENGTH? ?€?MYTEST?€? might return 101, which indicates
+that the length of the subsequence named ?€?mytest?€? is 101.
+","This command and query sets or returns the size of the subsequence.
+"
+Subsequence,"SLISt:SUBSequence:NEW <subseq_name>,<length>",,,,"<subseq_name>::=<string>
+","SLIST:SUBSEQUENCE:NEW ?€?MYTEST?€?,100 creates a subsequence named
+?€?mtest?€? of length 100.
+","This command creates a new subsequence.
+"
+Subsequence,SLISt:SUBSequence:TSTamp? <subseq_name>,SLISt:SUBSequence:TSTamp?,,,,,"This query returns the time stamp of the subsequence.
+Time stamp is updated whenever the subsequence is created or changed. It is not
+updated when it is renamed. It returns date as a string in the form ?€?yyyy/mm/dd
+hh:mm:ss?€? (a white space between data and time).
+"
+Subsequence,,,"<string>
+",,"<subseq_name>::=<string>
+","SLIST:SUBSEQUENCE:TSTAMP? ?€?MYTEST?€? returns the time stamp of the
+subsequence named ?€?mytest?€?.
+",
+Source,[SOURce[1]]:FREQuency[:CW|:FIXed] <NR3>,[SOURce[1]]:FREQuency[:CW|:FIXed]?,"<NR3>
+",,"<NR3>. The value must be between 10 MHz to 10 GHz.
+At *RST, this returns 1.2000000E+10.
+","SOURCE1:FREQUENCY 10MHZ sets the frequency to 10 MHz.
+","This command and query sets or returns the sampling frequency of the arbitrary
+waveform generator. Sampling frequency can be set when the internal clock
+source is selected and one of the following conditions is met:
+Internal is selected as Reference Source.
+External is selected as Reference Source and Fixed is selected as External
+Reference Type.
+CW and FIXed are aliases and have the same effect.
+Note that the frequency of the waveform output by the instrument is calculated as:
+The minimum number of points in a waveform for the instrument is 1.
+"
+Source,[SOURce[1]]:ROSCillator:FREQuency <NR3>,[SOURce[1]]:ROSCillator:FREQuency?,"<NR3>
+",,"<NR3>
+At *RST, this returns 10 MHz.
+","SOURCE1:ROSCILLATOR:FREQUENCY 10MHZ sets the reference oscillator
+source frequency to 10 MHz.
+SOURCE1:ROSCILLATOR:FREQUENCY? might return 1.00000000E+7.
+","This command selects the reference oscillator frequency. Valid values are 10
+MHz, 20 MHz and 100 MHz. This command is used when the Clock Source is
+Internal and Reference Input is External and External Reference Type is Fixed.
+"
+Source,[SOURce[1]]:ROSCillator:MULTiplier <NR1>,[SOURce[1]]:ROSCillator:MULTiplier?,"<NR1>
+",,"<NR1>
+At *RST, this returns 1.
+","SOURCE1:ROSCILLATOR:MULTIPLIER 10 sets the multiplier rate to 10.
+SOURCE1:ROSCILLATOR:MULTIPLIER? might return 10.
+","This command and query sets or returns the ROSCillator multiplier rate. This
+parameter is valid only when Clock Source is Internal and Reference Source is
+External and External Reference Type is Variable.
+"
+Source,[SOURce[1]]:ROSCillator:SOURce {INTernal|EXTernal},[SOURce[1]]:ROSCillator:SOURce?,"INT|EXT
+",,"<INTernal|EXTernal>
+INTernal ?€? The reference frequency is derived from the internal precision
+oscillator.
+EXTernal ?€? The reference frequency is derived from an external signal supplied
+through the reference clock input.
+At *RST, this returns INTernal.
+","SOURCE1:ROSCILLATOR:SOURCE INTERNAL selects the internal clock source.
+","This command selects the reference oscillator source. INTernal means that the
+reference frequency is derived from the internal precision oscillator. EXTernal
+means the reference frequency is derived from an external signal supplied through
+the Reference Clock Input connector.
+"
+Source,[SOURce[1]]:ROSCillator:TYPE {FIXed|VARiable},[SOURce[1]]:ROSCillator:TYPE?,"FIX|VAR
+",,"FIXed|VARiable
+FIXed: Selects a reference source whose frequency is fixed to 10MHz,
+20MHz, or 100MHz. Select one of these frequencies using the
+[SOURce[1]]:ROSCillator:FREQuency command.
+VARiable: Selects a reference source whose frequency is not fixed.
+At *RST, this returns FIXed.
+","SOURCE1:ROSCILLATOR:TYPE FIXED selects a fixed frequency external
+reference oscillator. The frequency is fixed to 10 MHz, 20 MHz, or 100MHz.
+","This command selects the type of the reference oscillator. This parameter is valid
+only when Clock Source is Internal and Reference Source is External.
+"
+Source,"[SOURce[n]]:COMBine:FEED {""ESIGnal""|""""}",[SOURce[n]]:COMBine:FEED?,"""ESIG""|?€??€?
+",,"?€?ESIGnal?€? ?€? Adds the input from the external signal.
+?€??€? ?€? Removes the signal feed.
+At *RST, this returns ?€??€?.
+The value of n is 1,2,3 or 4 depending on the number of channels available.
+Specifying ?€??€? as input cancels the setting.
+","SOURCE1:COMBINE:FEED ""ESIGNAL"" adds an external signal to the channel 1
+output signal.
+","This command adds the signal from an external input to the output of the channel.
+NOTE. When the signal addition is enabled, the return value is ?€?ESIG?€?. It is
+always in uppercase.
+When setting the parameter either ?€?ESIGnal?€? or ?€?ESIG?€? can be specified.
+While setting the parameter, it is case insensitive.
+"
+Source,[SOURce[n]]:DAC:RESolution <NR1>,[SOURce[n]]:DAC:RESolution?,"<NR1>
+",,"<NR1>
+8 sets the DAC resolution to 8 bits.
+10 sets the DAC resolution to 10 bits.
+The value of n indicates the channel number.
+At *RST, this returns 8.
+","SOURCE1:DAC:RESOLUTION 10 sets the channel 1 resolution to 10 bits.
+","This command and query sets or returns the DAC resolution.
+NOTE. DAC supports 8-bit and 10-bit resolutions only for AWG7000 Series
+instruments.
+When the resolution changes to 10-bit, marker data will not be available.
+AWG5000 Series instruments support only 14-bit resolution. Therefore this
+command will have no effect for these instruments.
+DAC resolution is independent for each channel in AWG7000 Series instruments.
+"
+Source,[SOURce[n]]:DELay[:ADJust] <NR3>,[SOURce[n]]:DELay[:ADJust]?,"<NR3>
+",,"<NR3>
+At *RST, this returns 0 s.
+","SOURCE1:DELAY:ADJUST 20PS sets the analog output delay for channel 1 to 20
+picoseconds.
+","This command and query sets or returns the delay (in seconds) of the analog
+output.
+NOTE. The effect of this command can be seen only in non-sequence mode.
+This command does not change the waveform display on the user interface.
+"
+Source,[SOURce[n]]:DELay:POINts <NR3>,[SOURce[n]]:DELay:POINts?,"<NR3>
+",,"<NR3>
+At *RST, this returns 0 points.
+","SOURCE1:DELAY:POINTS 20 sets the analog output delay for channel 1 to 20
+points.
+","This command and query sets or returns the delay (in points) of the analog output.
+NOTE. The effect of this command can be seen only in non-sequence mode.
+This command does not change the waveform display on the user interface.
+"
+Source,[SOURce[n]]:DIGital:VOLTage[:LEVel][:IMMediate][:AMPLitude] <NR3>,[SOURce[n]]:DIGital:VOLTage[:LEVel][:IMMediate][:AMPLitude]?,"<NR3>
+",,"<NR3>
+The value of n indicates the channel number.
+At *RST, this returns 1 Vpp.
+","SOURCE1:DIGITAL:VOLTAGE:LEVEL:IMMEDIATE:AMPLITUDE 1.4 sets the
+digital output amplitude level to 1.4 volts.
+","only)
+This command and query sets or returns the amplitude of digital output. This
+command is available only for AWG500B and AWG5000C instruments with
+option 03.
+"
+Source,[SOURce[n]]:DIGital:VOLTage[:LEVel][:IMMediate]:HIGH <NR3>,[SOURce[n]]:DIGital:VOLTage[:LEVel][:IMMediate]:HIGH?,"<NR3>
+",,"<NR3>
+The value of n indicates the channel number.
+At *RST, this returns 1 V.
+","SOURCE1:DIGITAL:VOLTAGE:LEVEL:IMMEDIATE:HIGH 1.4 sets the digital
+output high level to 1.4 volts.
+","This command and query sets or returns the high digital output. This command is
+available only for AWG5000B and AWG5000C instruments with option 03.
+"
+Source,[SOURce[n]]:DIGital:VOLTage[:LEVel][:IMMediate]:LOW <NR3>,[SOURce[n]]:DIGital:VOLTage[:LEVel][:IMMediate]:LOW?,"<NR3>
+",,"<NR3>
+The value of n indicates the channel number.
+At *RST, this returns 0 V.
+","SOURCE1:DIGITAL:VOLTAGE:LEVEL:IMMEDIATE:LOW 0.5 sets the digital
+output high level to 0.5 volts.
+","This command and query sets or returns the low digital output. This command is
+available only for AWG5000B and AWG5000C instruments with option 03.
+"
+Source,[SOURce[n]]:DIGital:VOLTage[:LEVel][:IMMediate]:OFFSet <NR3>,[SOURce[n]]:DIGital:VOLTage[:LEVel][:IMMediate]:OFFSet?,"<NR3>
+",,"<NR3>
+The value of n indicates the channel number.
+At *RST, this returns 0.5 V.
+","SOURCE1:DIGITAL:VOLTAGE:LEVEL:IMMEDIATE:OFFSET 1.0 sets the
+digital output amplitude level to 1.0 volts.
+","This command and query sets or returns the offset of digital output. This command
+is available only for AWG5000B and AWG5000C instruments with option 03.
+"
+Source,"[SOURce[n]]:FUNCtion:USER <Waveform file_name>[,<msus>]",[SOURce[n]]:FUNCtion:USER?,"<file_name>
+",,"<Waveform file_name>:: = <string>
+Value of n indicates the channel number.
+At *RST, this returns ?€? ?€?,?€?C:?€?.
+","SOURCE1:FUNCTION:USER ""SAMPLE1.WFM"" loads sample1.wfm into
+waveform list and also sets it as the output waveform of channel1.
+","This command and query sets or returns the waveform to waveform memory.
+Use this command to directly load an AWG400/500/600/700 series waveform
+(WFM), pattern file (PAT), or sequence (SEQ) file from mass memory to a
+specified channel.
+However, when loading a sequence file, the SOURce?€?s suffix is ignored.
+The waveform is internally converted to the AWG5000/AWG7000 series
+format and inserted into the current waveform list. To successfully load a
+waveform, the waveform name should conform to AWG5000/AWG7000
+series waveform naming conventions.
+If you specify the SEQ file, Run Mode is changed to Sequence.
+If you specify a WFM or PAT file while the Run Mode is Sequence, Run
+Mode is changed to Continuous.
+When you import a sequence file (*.SEQ) for the AWG400/500/600/700
+series using this command, all the user-defined waveforms are deleted before
+the import operation.
+"
+Source,[SOURce[n]]:MARKer[1|2]:DELay <NR3>,[SOURce[n]]:MARKer[1|2]:DELay?,"<NR3>
+",,"<NR3>
+The value of n indicates the channel number.
+At *RST, this returns 0.
+","SOURCE1:MARKER1:DELAY 20PS sets the marker1 delay of channel1 to 20
+picoseconds.
+SOURCE1:MARKER1:DELAY? might return 2.00000000E -011 indicating 20 ps.
+","This command and query sets or returns the marker delay. Marker delay is
+independent for each channel.
+In the AWG7000 Series when DAC resolution is changed to 10 bits, marker
+output is not available. However, marker related parameters can be modified
+using SCPI commands.
+"
+Source,[SOURce[n]]:MARKer[1|2]:VOLTage[:LEVel][:IMMediate][:AMPLitude] <NR3>,[SOURce[n]]:MARKer[1|2]:VOLTage[:LEVel][:IMMediate][:AMPLitude]?,"<NR3>
+",,"<NR3>
+The value of n indicates the channel number.
+At *RST, this returns 1 Vpp.
+","SOURCE1:MARKER1:VOLTAGE:AMPLITUDE 0.5V sets the channel1
+marker1amplitude to 0.5 volts.
+SOURCE1:MARKER1:VOLTAGE:AMPLITUDE? might return 0.5 volts.
+","This command sets the marker amplitude.
+In the AWG7000 Series, when the DAC resolution is changed to 10 bits, marker
+output is not available. However, marker related parameters can be modified
+using SCPI commands.
+"
+Source,[SOURce[n]]:MARKer[1|2]:VOLTage[:LEVel][:IMMediate]:HIGH <NR3>,[SOURce[n]]:MARKer[1|2]:VOLTage[:LEVel][:IMMediate]:HIGH?,"<NR3>
+",,"<NR3>
+The value of n indicates the channel number.
+At *RST, this returns 1 V.
+","SOURCE1:MARKER1:VOLTAGE:HIGH 0.75 sets the marker1 high to 0.75 volts.
+","This command sets the marker high level.
+In the AWG7000 Series, when DAC resolution is changed to 10 bits, marker
+output is not available. However, marker related parameters can be modified
+using SCPI commands.
+Refer to the User Online Help for the setting range of marker high and marker low.
+"
+Source,[SOURce[n]]:MARKer[1|2]:VOLTage[:LEVel][:IMMediate]:LOW <NR3>,[SOURce[n]]:MARKer[1|2]:VOLTage[:LEVel][:IMMediate]:LOW?,"<NR3>
+",,"<NR3>
+The value of n indicates the channel number.
+At *RST, this returns 0 V.
+","SOURCE1:MARKER1:VOLTAGE:LOW 0.5 sets the marker1 low to 0.5 volts.
+","This command sets the marker low level.
+In the AWG7000 Series, when the DAC resolution is changed to 10 bits, marker
+output is not available. However, marker related parameters can be modified
+using SCPI commands.
+Refer to the User Online Help for the setting range of marker high and marker low.
+"
+Source,[SOURce[n]]:MARKer[1|2]:VOLTage[:LEVel][:IMMediate]:OFFSet <NR3>,[SOURce[n]]:MARKer[1|2]:VOLTage[:LEVel][:IMMediate]:OFFSet?,"<NR3>
+",,"<NR3>
+The value of n indicates the channel number.
+At *RST, this returns 0.5 V.
+","SOURCE1:MARKER1:VOLTAGE:OFFSET 1.0 sets the offset channel1 marker1 to
+1 V.
+","This command sets the marker offset.
+In the AWG7000 Series, when the DAC resolution is changed to 10 bits, marker
+output is not available. However, marker related parameters can be modified
+using SCPI commands.
+"
+Source,[SOURce[n]]:PDELay:HOLD {PHASe|DELay|POINt},[SOURce[n]]:PDELay:HOLD?,"PHAS|DEL|POIN
+",,"PHASe|DELay|POINt
+At *RST, this returns PHASe.
+","SOURCE1:PDELAY:HOLD PHASE will retain the channel 1 phase value when the
+instrument sampling rate or waveform length is changed.
+","This command and query sets or returns the parameter that is retained when
+sampling rate or waveform length is changed.
+NOTE. The effect of this command can be seen only in non-sequence mode.
+"
+Source,[SOURce[n]]:PHASe[:ADJust] <NR3>,[SOURce[n]]:PHASe[:ADJust]?,"<NR3>
+",,"<NR3>
+At *RST, this returns 0 degree.
+","SOURCE1:PHASE:ADJUST 180 sets the analog output phase for channel 1 to
+180 degrees.
+","This command and query sets or returns the phase of the analog output.
+NOTE. The effect of this command can be seen only in non-sequence mode.
+This command does not change the waveform display on the user interface.
+"
+Source,[SOURce[n]]:SKEW <NR3>,[SOURce[n]]:SKEW?,"<NR3>
+",,"<NR3>
+?€?100 ps to +100 ps. It can be changed by a minimum of 1 ps at a time.
+The value of n indicates the channel number.
+At *RST, this returns 0 s.
+","SOURCE2:SKEW 75PS sets the skew for channel2 to 75 ps.
+SOURCE2:SKEW? might return 7.50000000E-011, indicating that the skew is 75 ps.
+","This command and query sets or returns the skew for the waveform associated
+with a channel.
+"
+Source,[SOURce[n]]:VOLTage[:LEVel][:IMMediate][:AMPLitude] <NR3>,[SOURce[n]]:VOLTage[:LEVel][:IMMediate][:AMPLitude]?,"<NR3>
+",,"<NR3> in the range 50 mV to 2V pk-pk.
+The value of n indicates the channel number.
+At *RST, this returns 1 Vpp.
+","SOURCE1:VOLTAGE:AMPLITUDE 1.5 sets the amplitude of channel1 to 1.5 volts.
+SOURCE1:VOLTAGE:AMPLITUDE? might return 1.5.
+","This command and query sets or returns the amplitude for the waveform
+associated with a channel.
+"
+Source,[SOURce[n]]:VOLTage[:LEVel][:IMMediate]:HIGH <NR3>,[SOURce[n]]:VOLTage[:LEVel][:IMMediate]:HIGH?,"<NR3>
+",,"<NR3>
+The value of n indicates the channel number.
+At *RST, this returns 0.5 V.
+","SOURCE1:VOLTAGE:HIGH 0.75 sets the channel1?€?s high to 0.75 volts.
+","This command and query sets or returns the high voltage level for the waveform
+associated with a channel. The command is not available on instruments with
+the Option 02 or Option 06 installed.
+"
+Source,[SOURce[n]]:VOLTage[:LEVel][:IMMediate]:LOW <NR3>,[SOURce[n]]:VOLTage[:LEVel][:IMMediate]:LOW?,"<NR3>
+",,"<NR3>
+The value of n indicates the channel number.
+At *RST, this returns ?€?0.5 V.
+","SOURCE1:VOLTAGE:LOW 0.25 sets the channel1 low to 0.25 volts.
+","This command and query sets or returns the low voltage level for the waveform
+associated with a channel. The command is not available on instruments with
+Option 02 or Option 06 installed.
+"
+Source,[SOURce[n]]:VOLTage[:LEVel][:IMMediate]:OFFSet <NR3>,[SOURce[n]]:VOLTage[:LEVel][:IMMediate]:OFFSet?,"<NR3>
+",,"<NR3>
+The value of n indicates the channel number.
+At *RST, this returns ?€?0.5 V.
+","SOURCE1:VOLTAGE:LEVEL:IMMEDIATE:OFFSET 0.5 sets the channel 1 offset
+to 0.5 V.
+","This command and query sets or returns the offset for the waveform associated
+with a channel. The command is not available on instruments with Option 02
+or Option 06 installed.
+"
+Source,[SOURce[n]]:WAVeform <wfm_name>,[SOURce[n]]:WAVeform?,"<wfm_name>
+",,",.
+<wfm_name>::=<string>
+The value of n indicates the channel number.
+","SOURCE1:WAVEFORM ?€?*SINE100?€? loads a predefined waveform called
+?€?*Sine100?€? into channel1 memory.
+SOURCE1:WAVEFORM? might return ?€?*Sine100?€?.
+","This command and query sets or returns the output waveform from the current
+waveform list for each channel when Run Mode is not Sequence. However, this
+command cannot be used to load a waveform stored in an AWG400/500/600/700
+waveform or pattern file. To load a waveform stored in an AWG400/500/600/700
+waveform or pattern file, use the [SOURce[n]]:FUNCtion:USER command.
+"
+Status,*SRE <NR1>,*SRE?,"<NR1>
+",,"<NR1>
+","*SRE 48 sets the bits in the SRER to the binary value 00110000.
+*SRE? might return a value of 32, showing that the bits in the SRER have the
+binary value 00100000.
+","This command sets or queries the bits in Service Request Enable register.
+"
+Status,STATus:OPERation:CONDition?,,"<NR1>
+",,,,"This query returns the contents of the Operation Condition Register.
+Note that the OCR is not used in the arbitrary waveform generator.
+"
+Status,STATus:OPERation:ENABle <NR1>,STATus:OPERation:ENABle?,"<NR1>
+",,"<NR1>
+",,"This command and query sets or returns the mask for the Operation Enable
+Register.
+Note that the OENR is not used in the arbitrary waveform generator.
+"
+Status,STATus:OPERation[:EVENt]?,,"<NR1>
+",,,,"This query returns the contents of Operation Event Register.
+Note that the OEVR is not used in the arbitrary waveform generator.
+"
+Status,STATus:PRESet,,,,,"STATUS:PRESET resets the SCPI enable registers.
+","This command sets the OENR and QENR registers.
+"
+Status,STATus:QUEStionable:CONDition?,,"<NR1>
+",,,,"This query returns the status of the Questionable Condition Register.
+Note that the QCR is not used in the arbitrary waveform generator.
+"
+Status,STATus:QUEStionable:ENABle <NR1>,STATus:QUEStionable:ENABle?,"<NR1>
+",,,,"This command and query sets or returns the mask for Questionable Enable
+Register.
+Note that the QENR is not used in the arbitrary waveform generator.
+"
+Status,STATus:QUEStionable[:EVENt]?,,"<NR1>
+",,,"STATUS:QUESTIONABLE:EVENT? might return 32, which indicates that the
+QEVR contains the binary number 00000000 00100000.
+","This query returns the status of the QEVR register and clears it.
+"
+Status,*STB?,,"<NR1>
+",,,"*STB? might return 96, which indicates that the SBR contains the binary number
+0110 0000.
+","This query returns the contents of Status Byte Register.
+"
+System,"SYSTem:DATE <year>,<month>,<day>",SYSTem:DATE?,"<year>,<month>,<day>
+",,"<year>::=<NRf> (Four digit number)
+<month>::=<NRf> from 1 to 12
+<day>::=<NRf> from 1 to 31
+","SYSTEM:DATE 2008,6,20 sets the date to June 20, 2008.
+","This command and query sets or returns the system date. When the values are
+nonintegers, they are rounded off to nearest integral values.
+"
+System,SYSTem:ERRor[:NEXT]?,,"<Error / event number>, <error / event description [;device dependant info]>
+0 ?€? No Error
+Error / event number <NR1>
+error / event description <string>
+",,,"SYSTEM:ERROR:NEXT? might return the following response:
+?€?102,?€?Syntax error;possible invalid suffix - :SOUR:FREQ 2V?€?
+This response indicates that the unit is invalid.
+","This command retrieves and returns data from the error and event queues.
+"
+System,SYSTem:KLOCk <state>,SYSTem:KLOCk?,"<NR1>
+",,"<state>::=<Boolean>
+0 indicates False. The front panel and keyboard are unlocked.
+1 indicates True. The front panel and keyboard are locked.
+At *RST, this returns 0.
+NOTE. When you manually set the Touch Screen button to OFF on the front panel,
+the *RST will not reset to 0.
+","SYSTEM:KLOCK ON locks the front panel and keyboard.
+SYSTEM:KLOCK might return 1, which indicates that the front panel and keyboard
+are locked.
+","This command locks or unlocks the keyboard and front panel of the arbitrary
+waveform generator.
+"
+System,"SYSTem:TIME <hour>,<minute>,<second>",SYSTem:TIME?,"<hour>,<minute>,<second>
+",,"<hour>,<minute>,<second>
+<hour>::=<NRf> from 0 to 23
+<minute>::=<NRf> from 0 to 59
+<second>::=<NRf> from 0 to 59
+","SYSTEM:TIME 11,23,58 sets the time.
+","This command and query sets or returns the system time. When the values are
+nonintegers, they are rounded off to nearest integral values.
+"
+System,SYSTem:VERSion?,,"<NR2>::=YYYY.V
+where YYYY represents the year version and V represents an approved revision
+number for that year.
+",,,"SYSTEM:VERSION? might return 1999.0.
+","This command returns the SCPI version number to which the command conforms.
+"
+Trigger,*TRG,,,,,"*TRG generates a trigger event.
+","This command generates a trigger event. This is equivalent to pressing Trig
+button on front panel.
+"
+Trigger,TRIGger[:SEQuence][:IMMediate],,,,,"TRIGGER:SEQUENCE:IMMEDIATE generates the trigger event.
+","This command generates a trigger event. This is equivalent to *TRG.
+"
+Trigger,TRIGger[:SEQuence]:IMPedance <impedance>,TRIGger[:SEQuence]:IMPedance?,"<NR3>
+",,"<impedance>::=<NR3> the value will be 50 and 1000.
+At *RST, this returns 1000 ??.
+","TRIGGER:SEQUENCE:IMPEDANCE 50 selects 50 ?? impedance for the external
+trigger input.
+","This command and query sets or returns the trigger impedance. It applies only
+to the external trigger.
+"
+Trigger,TRIGger[:SEQuence]:LEVel <NR3>,TRIGger[:SEQuence]:LEVel?,"<NR3>
+",,"<NR3>
+At *RST, this returns 1.4 V.
+","TRIGGER:SEQUENCE:LEVEL 200MV sets the trigger level to 200 mV.
+","This command and query sets or returns the trigger input level (threshold).
+"
+Trigger,TRIGger[:SEQuence]:MODE <trigger_type>,TRIGger[:SEQuence]:MODE?,"SYNC|ASYN
+",,"<trigger_type>::={SYNChronous|ASYNchronous}
+SYNChronous does not lower trigger jitter.
+ASYNchronous lowers trigger jitter.
+At *RST, this returns ASYNchronous.
+","TRIGGER:SEQUENCE:MODE ASYNCHRONOUS sets the trigger timing to
+asynchronous type.
+","This command and query sets or returns the trigger timing. It is used in the
+Triggered or Sequence mode. Trigger timing can be set when the external trigger
+source is selected.
+"
+Trigger,TRIGger[:SEQuence]:POLarity {POSitive|NEGative},TRIGger[:SEQuence]:POLarity?,"POS|NEG
+",,"POSitive means the gate signal is activated when the external trigger signal is
+greater (more Positive) than the trigger level.
+NEGative means the gate signal is activated when the external trigger signal is
+less (more Negative) than the trigger level.
+At *RST, this returns POSitive.
+","TRIGGER:SEQUENCE:POLARITY NEGATIVE selects the Negative polarity.
+","This command and query sets or returns the trigger input polarity. It is used to set
+polarity in gated mode.
+"
+Trigger,TRIGger[:SEQuence]:SLOPe {POSitive|NEGative},TRIGger[:SEQuence]:SLOPe?,"POS|NEG
+",,"POSitive means that the event occurs on the rising edge of the external trigger
+signal.
+NEGative means that the event occurs on the falling edge of the external trigger
+signal.
+At *RST, this returns POSitive.
+","TRIGGER:SEQUENCE:SLOPE NEGATIVE selects the Negative slope.
+","This command and query sets or returns the trigger slope. It is used to set polarity
+in modes other than gated mode.
+"
+Trigger,TRIGger[:SEQuence]:SOURce {INTernal|EXTernal},TRIGger[:SEQuence]:SOURce?,"INT|EXT
+",,"INTernal selects internal clock as the trigger source.
+EXTernal selects external clock as the trigger source.
+At *RST, this returns EXTernal.
+","TRIGGER:SEQUENCE:SOURCE INTERNAL selects the internal clock as the trigger
+source.
+","This command and query sets or returns the trigger source.
+"
+Trigger,TRIGger[:SEQuence]:TIMer <NR3>,TRIGger[:SEQuence]:TIMer?,"<NR3>
+",,"<NR3>
+At *RST, this returns 100 ms.
+","TRIGGER:SEQUENCE:TIMER 5MS sets the internal trigger rate to 5 ms.
+","This command and query sets or returns the internal trigger rate (trigger interval).
+"
+Trigger,TRIGger[:SEQuence]:WVALue {FIRSt|LAST},TRIGger[:SEQuence]:WVALue?,"FIRS|LAST
+",,"FIRSt specifies the first value of the waveform as the output level.
+LAST specifies the last value of the waveform as the output level.
+At *RST, this returns FIRSt.
+","TRIGGER:SEQUENCE:WVALUE LAST selects the last value as the output level.
+","This command and query sets or returns the output data position of a waveform
+while the instrument is in the waiting-for-trigger state. This is valid only when
+Run Mode is Triggered or Gated.
+"
+Diagnostic,*TST?,,"<NR1>
+0 indicates no error.
+",,,"*TST? might return ?€?330 indicating that the self test failed.
+","This query executes a self test and returns the results.
+"
+Synchronization,*WAI,,,,,"*WAI prevents the execution of any commands or queries until all pending
+operations complete.
+","This command prevents the arbitrary waveform generator from executing further
+commands until all pending commands are executed.
+"
+Waveform,WLISt:NAME? <Index>,,"<string>::=<wfm_name> is the waveform name specified by <index>.
+",,"<Index>::=<NR1>
+","WLIST:NAME? 21 might return ?€?untitled21?€?.
+","This query returns the waveform name of an element in the waveform list. This
+query can be used to query the waveform name in the waveform list.
+"
+Waveform,WLISt:SIZE?,,"<NR1>
+At *RST, this returns the number of predefined waveforms.
+",,,"WLIST:SIZE? might return 25 when user-defined waveform list is empty.
+","This query returns the size (number of waveforms) of the waveform list. Names
+of both predefined and user-created waveforms are stored in a single list. The
+maximum size depends on the length of each waveform.
+"
+Waveform,"WLISt:WAVeform:DATA <wfm_name>[,<StartIndex>[,<Size>]],<block_data>","WLISt:WAVeform:DATA? <wfm_name>[,<StartIndex>[,<Size>]]","<block_data>
+",,"StartIndex, Size,<block_data>
+<wfm_name>::=<string>
+<StartIndex>::=<NR1>
+<Size>::=<NR1>
+<block_data>::=<IEEE 488.2 block>
+","WLIST:WAVEFORM:DATA ?€?TestWfm?€?,0,1024,#42048xxxx?€? this transfers
+waveform data to a waveform called ?€?TestWfm?€? created earlier using the
+WLISt:WAVeform:NEW command. The data size is 1024 points (2048 bytes) and
+the start index is 1 (the first data point). Note that the IEEE 488.2 block header
+depends on the type of the data being transferred. If it is integer type, the total
+bytes will be twice the size of the waveform and if it is a real waveform, the total
+bytes will be five times the size of the waveform.
+","This command transfers waveform data from the external controller into the
+waveform list or from the waveform list to the external control program.
+NOTE. Before transferring data to the instrument, a waveform must be created
+using the WLISt:WAVeform:NEW command.
+Use this command to set both analog and marker data. To set only the marker
+data, use the WLISt:WAVeform:MARKer:DATA command.
+Using StartIndex and Size, part of a waveform can be transferred at a time. Very
+large waveforms can be transferred in chunks.
+Waveform data is always transferred in the LSB first format.
+The format of the transferred data depends on the waveform type.
+If Size is omitted, the length of waveform is assumed to be the value of the Size
+parameter.
+Transferring large waveforms in chunks allows external programs to cancel the
+operation before it is completed.
+The instrument supports two types of waveform data: integer format and floating
+point format. The integer format occupies two bytes per waveform data point.
+Floating point waveform data points occupy five bytes. So the total bytes will be
+five times the size of the waveform. The first four bytes of each data point represent
+the floating point representation of the sample value and the fifth byte stores the
+marker data. The marker data occupy the two most significant bits of the fifth byte.
+The minimum size of the waveform must be 1 and the maximum size depends on
+the instrument model and configuration.
+This command has a limit of 650,000,000 bytes of data. If this limit is insufficient,
+consider the following alternatives:
+Use a more efficient file encoding (WFM or PAT) when sending data.
+Use instrument commands for direct control (WLISt:WAVeform:DATA,
+FREQ, VOLT, and so on).
+Use Ethernet (ftp, http, or file sharing) to transfer the file.
+Refer to the User Online Help, AWG Reference > Waveform General
+Information section for the detailed format specification.
+"
+Waveform,WLISt:WAVeform:DELete {<wfm_name>|ALL},,,,"<wfm_name>::=<string>
+","WLIST:WAVEFORM:DELETE ALL deletes all user-defined waveforms from the
+currently loaded setup. The ALL parameter does not delete predefined waveforms.
+WLIST:WAVEFORM:DELETE ?€?Test1?€? deletes a waveform called ?€?Test1?€?.
+","This command deletes the waveform from the currently loaded setup.
+NOTE. The waveform will be deleted even if it is a part of the sequence
+The sequence element corresponding to the deleted waveform will have
+WFMID_EMPTY
+When ALL is specified, all user-defined waveforms in the list are deleted in a
+single action. Note that there is no ?€?UNDO?€? action once the waveforms are
+deleted. Use caution before issuing this command.
+If the deleted waveform is currently loaded into waveform memory, it is unloaded.
+If the RUN state of the instrument is ON, the state is turned OFF. If the channel
+is on, it will be switched off.
+"
+Waveform,WLISt:WAVeform:LENGth? <wfm_name>,,"<NR1>
+",,"<wfm_name>::=<string>
+","WLIST:WAVEFORM:LENGTH? ?€?*Sine 360?€? might return 360.
+","This query returns the size of the waveform. The returned value represents data
+points (not bytes).
+"
+Waveform,"WLISt:WAVeform:MARKer:DATA <wfm_name>[,<StartIndex>[,<Size>]],<block_data>","WLISt:WAVeform:MARKer:DATA? <wfm_name>[,<StartIndex>[,<Size>]]","<block_data>
+",,"<wfm_name>::=<string>
+<StartIndex>::=<NR1>
+<Size>::=<NR1>
+<block_data>::=<IEEE 488.2 block>
+","WLIST:WAVEFORM:MARKER:DATA ?€?myWaveform?€?,0,1000,#41000?€?.
+WLIST:WAVEFORM:MARKER:DATA? ?€?myWaveform?€?,0,1000
+","This command sets or queries the waveform marker data.
+NOTE. This command returns or sends only marker data for the waveform.
+Each marker data occupies one bit. Two most significant bits of each byte are
+used for marker1 and marker2 (bit 6 for marker1 and bit 7 for marker2). For
+more information about the waveform data format, refer to the AWG Reference >
+Waveform General Information section of the User Online Help.
+You will have to use bit masks to obtain the actual value.
+When used on a waveform with n data points, you get only n bytes, each byte
+having values for both markers.
+Block data can be sent in batches using ""Size"" and ""StartIndex"" parameters.
+This command has a limit of 650,000,000 bytes of data. If this limit is insufficient,
+consider the following alternatives:
+Use a more efficient file encoding (WFM or PAT) when sending data.
+Use instrument commands for direct control (WLISt:WAVeform:DATA,
+FREQ, VOLT, and so on).
+Use Ethernet (ftp, http, or file sharing) to transfer the file.
+"
+Waveform,"WLISt:WAVeform:NEW <wfm_name>,<Size>,<Type>",,,,"<wfm_name>::=<string>
+<Size>::=<NR1>
+<Type>::={REAL|INTeger}
+","WLIST:WAVEFORM:NEW ?€?Test1?€?, 1024, INTEGER creates a new integer
+waveform called Test1 with 1024 points.
+","This command creates a new empty waveform in the waveform list of current
+setup.
+"
+Waveform,WLISt:WAVeform:PREDefined? <wfm_name>,,"<state>::=<Boolean>
+",,"<wfm_name>::=<string>
+","WLIST:WAVEFORM:PREDEFINED? ?€?*Sine3600?€? might return 1 indicating that
+it is a predefined waveform.
+","This query returns true or false based on whether the waveform is predefined.
+NOTE. Predefined waveforms have fixed length and name. Therefore, renaming
+or deleting them is not possible.
+Creating a new waveform with the same name as the predefined waveform is
+not possible.
+Data of a predefined waveform can be transferred to an external controller using
+WLISt:WAVeform:DATA command.
+"
+Waveform,WLISt:WAVeform:TSTamp? <wfm_name>,,"?€?yyyy/mm/dd hh:mm:ss?€? is the waveform time stamp.
+Where
+yyyy refers to a four-digit year number mm refers to two-digit month number
+from 01 to 12
+dd refers to two-digit day number in the month
+hh refers to two-digit hour number mm refers to two-digit minute number
+ss refers to two-digit second number
+",,"<wfm_name>::=<string>
+","WLIST:WAVEFORM:TSTAMP? ?€?Sine?€? might return the date and time the ?€?Sine?€?
+waveform was created or last modified.
+WLIST:WAVEFORM:TSTAMP? ?€?*DC?€? might return ?€??€? because ?€?*DC?€? is a
+predefined waveform.
+","This query returns the time stamp of the waveform.
+NOTE. Time stamp is updated whenever the waveform is created or changed.
+It is not updated when it is renamed.
+The command returns date as a string in the form yyyy/mm/dd hh:mm:ss (a white
+space between date and time).
+Time stamp for predefined waveforms is null string ("""").
+"
+Waveform,WLISt:WAVeform:TYPE? <wfm_name>,,"INT|REAL
+",,"<wfm_name>::=<string>
+",WLIST:WAVEFORM:TYPE? ?€?*Ramp1000?€? might return REAL.,"This query returns the type of the waveform.
+"

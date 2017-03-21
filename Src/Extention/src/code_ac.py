@@ -1,17 +1,53 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+import csv
 
 
-def search (key):
-    result = None
+def query_csv_awg():
+    reader = csv.reader(open("..\..\Src\Lib\AWG.csv", "rt"))
+    cmd = {}
+    for row in reader:
+        if row[1] is not None:
+            if '?' not in row[1]:
+                cmd.update({row[1]: 0})
+            else:
+                cmd.update({row[1]: 1})
+        if row[2] is not None:
+            cmd.update({row[2]:1})
+    return cmd
+
+
+def query_csv_afg():
+    return 1
+
+
+def query_csv_mdo():
+    return 1
+
+
+def query_csv_mdd():
+    return 1
+
+
+def model_content(connect_model):
+    if 'AWG' in connect_model:
+        result = query_csv_awg()
+    #elif 'AFG'in connect_model:
+    #    result = query_csv_afg()
+    #elif 'MDO'in connect_model:
+    #    result = query_csv_mdo()
+    #elif 'MSO' in connect_model or 'DPO' in connect_model or 'DSA' in connect_model:
+    #    result = query_csv_mdd()
+    else:
+        result = None
     return result
 
 
-def get_data(model):
+def get_data(model, device):
     # Searching through the Doc
     # Result shows in a dictionary structure
-    result = {"alpha": 0, "apple": 1, "agree": 2}
-    icon_address = ['..\..\Src\Img\A.png', '..\..\Src\Img\E.png','..\..\Src\Img\O.png']
+    result = model_content(device)
+    icon_address = ['..\..\Src\Img\A.png', '..\..\Src\Img\E.png']
     index = 0;
     for cmd, value in result.items():
         item = QStandardItem(cmd)
@@ -21,19 +57,20 @@ def get_data(model):
 
 
 class CodeAC:
-    def __init__(self, input_line):
+    def __init__(self, input_line, device):
         self.completer = QCompleter()
         input_line.setCompleter(self.completer)
         self.model = QStandardItemModel()
-        self.input_line = input_line;
+        self.input_line = input_line
+        self.device = device
 
     def active_script(self):
-        get_data(self.model)
+        get_data(self.model, self.device)
         self.completer.setModel(self.model)
         self.completer.activated.connect(self.tip_balloon)
 
     def tip_balloon(self, text):
         # selected highlight item
-        self.input_line.setToolTip(text)
+        self.input_line.setToolTip("none")
 
 
