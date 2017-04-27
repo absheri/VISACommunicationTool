@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 import pandas as pd
-import csv
+
 
 def query_csv_awg():
     data = pd.read_csv("..\..\Src\Lib\AWG.csv",  encoding="ISO-8859-1", header=None,
@@ -79,19 +79,95 @@ class CodeAC:
 class DocQuery(QDialog):
 
     def __init__(self, parent=None, device=None):
-        super().__init__(parent)
+        super(DocQuery,self).__init__(parent)
+        self.setFixedSize(600,600)
         self.device = device
-        keyword_in = QLineEdit(self)
-        search_button = QPushButton("Go", self)
-        search_button.clicked.connect(self.doc_search)
+        self.keyword_in = QLineEdit(self)
+        self.search_button = QPushButton("Go", self)
+        self.search_button.clicked.connect(self.doc_search)
+        self.doc_display = QScrollArea(self)
+        self.doc_display.setStyleSheet("background-color: white")
         self.grid_layout = QGridLayout(self)
         self.grid_layout.setSpacing(10)
-        self.grid_layout.addWidget(keyword_in, 1, 0)
-        self.grid_layout.addWidget(search_button, 1, 1)
+        self.grid_layout.addWidget(self.keyword_in, 1, 0)
+        self.grid_layout.addWidget(self.search_button, 1, 1)
+        self.grid_layout.addWidget(self.doc_display, 2,0,4,0)
         self.setWindowTitle("Search Documentation")
 
     def doc_search(self):
         key = self.keyword_in.text()
-        reader = csv.reader(open("..\..\Src\Lib\AWG.csv", "rt"))
-        #for row in reader:
-
+        # for row in reader:
+        if 'AWG' in self.device:
+            data = pd.read_csv("..\..\Src\Lib\AWG.csv", encoding="ISO-8859-1", header=None)
+        # print format
+        query_info = data[data[1].str.contains(key)==True]
+        Group = []
+        Syntax = []
+        Query = []
+        Return = []
+        Argument = []
+        Example = []
+        Description = []
+        for element in query_info[0]:
+            Group.append(str(element))
+        for element in query_info[1]:
+            Syntax.append(str(element))
+        for element in query_info[2]:
+            Query.append(str(element))
+        for element in query_info[3]:
+            Return.append(str(element))
+        for element in query_info[5]:
+            Argument.append(str(element))
+        for element in query_info[6]:
+            Example.append(str(element))
+        for element in query_info[7]:
+            Description.append(str(element))
+        ####
+        W = QWidget(self)
+        w_layout = QGridLayout(self)
+        for index in range(2):
+            g_display = QLabel(self)
+            g_display.setText(Group[index])
+            s_display = QLabel(self)
+            s_display.setText(Syntax[index])
+            q_display = QLabel(self)
+            q_display.setText(Query[index])
+            r_display = QLabel(self)
+            r_display.setText(Return[index])
+            a_display = QLabel(self)
+            a_display.setText(Argument[index])
+            e_display = QLabel(self)
+            e_display.setText(Example[index])
+            d_display = QLabel(self)
+            d_display.setText(Description[index])
+            label = QLabel(self)
+            #label.setReadOnly(True)
+            label.setText("Group")
+            w_layout.addWidget(label, 1+index*7,0)
+            w_layout.addWidget(g_display,1+index*7,1)
+            label = QLabel(self)
+            label.setText("Syntax")
+            w_layout.addWidget(label, 2+index*7, 0)
+            w_layout.addWidget(s_display, 2+index*7, 1)
+            label = QLabel(self)
+            label.setText("Query")
+            w_layout.addWidget(label, 3+index*7, 0)
+            w_layout.addWidget(q_display, 3+index*7, 1)
+            label = QLabel(self)
+            label.setText("Return")
+            w_layout.addWidget(label, 4+index*7, 0)
+            w_layout.addWidget(r_display, 4+index*7, 1)
+            label = QLabel(self)
+            label.setText("Argument")
+            w_layout.addWidget(label, 5+index*7, 0)
+            w_layout.addWidget(a_display, 5+index*7, 1)
+            label = QLabel(self)
+            label.setText("Example")
+            w_layout.addWidget(label, 6+index*7, 0)
+            w_layout.addWidget(e_display, 6+index*7, 1)
+            label = QLabel(self)
+            label.setText("Description")
+            w_layout.addWidget(label, 7+index*7, 0)
+            w_layout.addWidget(d_display,  7+index*7, 1)
+        W.setLayout(w_layout)
+        self.doc_display.setWidget(W)

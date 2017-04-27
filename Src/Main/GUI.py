@@ -1,5 +1,4 @@
 import sys
-from PyQt5 import QtWidgets
 from Src.Extention.src.code_ac import *
 import ctypes
 
@@ -15,6 +14,7 @@ class Window(QMainWindow):
         self.menu_bar = self.menuBar()
         self.ipInformationDisplay = QLabel(self)
         self.textInput = QLineEdit(self)
+        self.textInput.setFixedWidth(200)
         self.labelOutput = QLabel(self)
         self.buttonWrite = QPushButton(self)
         self.buttonQuery = QPushButton(self)
@@ -36,11 +36,6 @@ class Window(QMainWindow):
 
         editMenu = self.menu_bar.addMenu('&Edit')
         editMenu.addAction("123")
-
-       # connectionMenu = self.menu_bar.addMenu('&Connection')
-       # connectAction = QAction('&Connect', self)
-       # connectAction.triggered.connect(self.ipNewWindowD)
-       # connectionMenu.addAction(connectAction)
 
         settingMenu = self.menu_bar.addMenu('&Setting')
         settingMenu.addAction("123")
@@ -76,7 +71,7 @@ class Window(QMainWindow):
         self.extention.active_script()
 
     def active_query(self):
-        self.query_window = DocQuery(self)
+        self.query_window = DocQuery(self, self.connected_device)
         self.query_window.setGeometry(100, 200, 400, 400)
         self.query_window.show()
 
