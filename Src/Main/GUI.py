@@ -14,7 +14,7 @@ class Window(QMainWindow):
         self.menu_bar = self.menuBar()
         self.ipInformationDisplay = QLabel(self)
         self.textInput = QLineEdit(self)
-        self.textInput.setFixedWidth(200)
+        self.textInput.setFixedWidth(500)
         self.labelOutput = QLabel(self)
         self.buttonWrite = QPushButton(self)
         self.buttonQuery = QPushButton(self)
@@ -43,21 +43,26 @@ class Window(QMainWindow):
         helpMenu = self.menu_bar.addMenu('&Help')
         helpMenu.addAction("123")
         #
+        ToolMenu = self.menu_bar.addMenu('&Tool')
+        QueryAction = QAction('&Query', self)
+        QueryAction.triggered.connect(self.active_query)
+        ToolMenu.addAction(QueryAction)
+        #
         self.ipInformationDisplay.move(25, 25)
         #
-        self.textInput.move(25, 250)
-        #
+        self.textInput.move(25, 450)
+
         self.labelOutput.setGeometry(25, 75, 200, 120)
         #
         self.buttonWrite.setText("Write")  # text
         self.buttonWrite.clicked.connect(self.writeSendD)
-        self.buttonWrite.move(300, 250)
+        self.buttonWrite.move(600, 450)
         self.buttonWrite.setObjectName("ButtonWrite")
         self.buttonWrite.setShortcut('Ctrl+W')  # shortcut key
         #
         self.buttonQuery.setText("Query")  # text
         self.buttonQuery.clicked.connect(self.active_query)
-        self.buttonQuery.move(300, 275)
+        self.buttonQuery.move(600, 475)
         self.buttonQuery.setObjectName("ButtonQuery")
         self.buttonQuery.setShortcut('Ctrl+Q')  # shortcut key
         #
