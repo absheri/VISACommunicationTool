@@ -1,5 +1,6 @@
 import sys
 from Src.Extention.src.code_ac import *
+from Src.Extention.src.communication import *
 import ctypes
 
 
@@ -69,7 +70,11 @@ class Window(QMainWindow):
         self.show()
 
     def idn_connected_device(self):
-        self.connected_device = "AWG1224"
+        try:
+            temp_com = CommunicationInterface()
+            self.connected_device = temp_com.device_identification()
+        except:
+            self.connected_device = "AWG1224"
 
     def active_extention(self):
         self.extention = CodeAC(self.textInput, self.connected_device)
