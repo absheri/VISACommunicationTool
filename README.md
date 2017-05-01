@@ -16,8 +16,15 @@ Run our project with PyCharm (**Recommanded**)
  - Set up project interpreter with necessary packages: **PyQt5**, **PyVISA**, and **Pandas** with help of this [file](https://github.com/HouPoc/VISACommunicationTool-GROUP64/blob/master/SetUp)
  - Run GUI.py
 
+All packages can be installed via pip from PyPI
+```
+>> pip install pandas
+>> pip3 install install pyqt5
+>> pip install -U pyvisa
+```
+
 Run our project from terminal.
-**Be Sure all necessary packages are installed**
+
 ```
 >> python GUI.py
 ```
