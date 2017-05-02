@@ -1,7 +1,6 @@
 import visa
 
 # Define the resource manager
-rm = visa.ResourceManager()
 
 
 class CommunicationInterface:
