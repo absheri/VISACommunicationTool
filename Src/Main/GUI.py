@@ -21,9 +21,11 @@ class Window(QMainWindow):
         self.buttonQuery = QPushButton(self)
         self.list = ['', '']
         ###
+        self.file_io = QFileDialog()
         self.connected_device = None
         self.extention = None
         self.query_window = None
+        self.commands_from_files = []
 
     def init_main(self):
         self.setGeometry(600, 600, 800, 600)
@@ -44,10 +46,13 @@ class Window(QMainWindow):
         helpMenu = self.menu_bar.addMenu('&Help')
         helpMenu.addAction("123")
         #
-        ToolMenu = self.menu_bar.addMenu('&Tool')
+        toolMenu = self.menu_bar.addMenu('&Tool')
         QueryAction = QAction('&Query', self)
         QueryAction.triggered.connect(self.active_query)
-        ToolMenu.addAction(QueryAction)
+        toolMenu.addAction(QueryAction)
+        importAction = QAction('&Import', self)
+        importAction.triggered.connect(self.read_from_file)
+        toolMenu.addAction(importAction)
         #
         self.ipInformationDisplay.move(25, 25)
         #
@@ -84,6 +89,15 @@ class Window(QMainWindow):
         self.query_window = DocQuery(self, self.connected_device)
         self.query_window.setGeometry(100, 200, 400, 400)
         self.query_window.show()
+
+    def read_from_file(self):
+        file = self.file_io.getOpenFileName(self, 'Open file')
+        if file[0]:
+            f = open(file[0], 'r')
+            if f is not None:
+                for row in f:
+                    if row is not None:
+                        self.commands_from_files.append(row)
 
     def writeSendD(self):
         signal = 'W->'
