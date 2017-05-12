@@ -67,7 +67,7 @@ class Window(QMainWindow):
         self.buttonWrite.setShortcut('Ctrl+W')  # shortcut key
         #
         self.buttonQuery.setText("Query")  # text
-        self.buttonQuery.clicked.connect(self.active_query)
+        self.buttonQuery.clicked.connect(self.querySendD)
         self.buttonQuery.move(600, 475)
         self.buttonQuery.setObjectName("ButtonQuery")
         self.buttonQuery.setShortcut('Ctrl+Q')  # shortcut key
@@ -102,6 +102,11 @@ class Window(QMainWindow):
     def writeSendD(self):
         signal = 'W->'
         currInput = self.textInput.text()
+        try:
+            communication_driver = CommunicationInterface()
+            send_command = communication_driver.write_to_device(currInput)
+        except:
+            print('INTR Error: No device detected')
         currOutput = self.list[0] + '\n' + signal + currInput
         self.list[0] = currOutput
         self.labelOutput.setText(currOutput)
@@ -110,13 +115,22 @@ class Window(QMainWindow):
     def querySendD(self):
         signal = 'Q->'
         currInput = self.textInput.text()
+        try:
+            communication_driver = CommunicationInterface()
+            '''
+                query --> result queried from device
+            '''
+            query_result = communication_driver.query_from_device(currInput)
+            #print(query_result)
+        except:
+            print('INTR Error: No device detected')
         currOutput = self.list[0] + '\n' + signal + currInput
         self.list[0] = currOutput
         self.labelOutput.setText(currOutput)
         self.labelOutput.adjustSize()
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     app = QApplication(sys.argv)
     VCT = Window()
     VCT.init_main()
