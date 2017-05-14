@@ -21,9 +21,11 @@ class Window(QMainWindow):
         self.buttonQuery = QPushButton(self)
         self.list = ['', '']
         ###
+        self.file_io = QFileDialog()
         self.connected_device = None
         self.extention = None
         self.query_window = None
+        self.commands_from_files = []
 
     def init_main(self):
         self.setGeometry(600, 600, 800, 600)
@@ -44,10 +46,13 @@ class Window(QMainWindow):
         helpMenu = self.menu_bar.addMenu('&Help')
         helpMenu.addAction("123")
         #
-        ToolMenu = self.menu_bar.addMenu('&Tool')
+        toolMenu = self.menu_bar.addMenu('&Tool')
         QueryAction = QAction('&Query', self)
         QueryAction.triggered.connect(self.active_query)
-        ToolMenu.addAction(QueryAction)
+        toolMenu.addAction(QueryAction)
+        importAction = QAction('&Import', self)
+        importAction.triggered.connect(self.read_from_file)
+        toolMenu.addAction(importAction)
         #
         self.ipInformationDisplay.move(25, 25)
         #
@@ -62,7 +67,7 @@ class Window(QMainWindow):
         self.buttonWrite.setShortcut('Ctrl+W')  # shortcut key
         #
         self.buttonQuery.setText("Query")  # text
-        self.buttonQuery.clicked.connect(self.active_query)
+        self.buttonQuery.clicked.connect(self.querySendD)
         self.buttonQuery.move(600, 475)
         self.buttonQuery.setObjectName("ButtonQuery")
         self.buttonQuery.setShortcut('Ctrl+Q')  # shortcut key
@@ -85,9 +90,23 @@ class Window(QMainWindow):
         self.query_window.setGeometry(100, 200, 400, 400)
         self.query_window.show()
 
+    def read_from_file(self):
+        file = self.file_io.getOpenFileName(self, 'Open file')
+        if file[0]:
+            f = open(file[0], 'r')
+            if f is not None:
+                for row in f:
+                    if row is not None:
+                        self.commands_from_files.append(row)
+
     def writeSendD(self):
         signal = 'W->'
         currInput = self.textInput.text()
+        try:
+            communication_driver = CommunicationInterface()
+            send_command = communication_driver.write_to_device(currInput)
+        except:
+            print('INTR Error: No device detected')
         currOutput = self.list[0] + '\n' + signal + currInput
         self.list[0] = currOutput
         self.labelOutput.setText(currOutput)
@@ -96,13 +115,22 @@ class Window(QMainWindow):
     def querySendD(self):
         signal = 'Q->'
         currInput = self.textInput.text()
+        try:
+            communication_driver = CommunicationInterface()
+            '''
+                query --> result queried from device
+            '''
+            query_result = communication_driver.query_from_device(currInput)
+            #print(query_result)
+        except:
+            print('INTR Error: No device detected')
         currOutput = self.list[0] + '\n' + signal + currInput
         self.list[0] = currOutput
         self.labelOutput.setText(currOutput)
         self.labelOutput.adjustSize()
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     app = QApplication(sys.argv)
     VCT = Window()
     VCT.init_main()

@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
 import pandas as pd
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 
 def query_csv_awg():
@@ -15,41 +15,39 @@ def query_csv_awg():
                 cmd.update({str(item): 1})
     for item in data[2]:
         if str(item) is not None:
-            cmd.update({str(item):1})
+            cmd.update({str(item): 1})
     return cmd
 
 
-def query_csv_afg():
-    return 1
-
-
-def query_csv_mdo():
-    return 1
-
-
-def query_csv_mdd():
-    return 1
+def query_csv_dpo():
+    data = pd.read_csv("..\..\Src\Lib\DPO.csv", encoding="ISO-8859-1", header=None,
+                       usecols=[1, 2])
+    cmd = {}
+    for item in data[1]:
+        if str(item) is not None:
+            if '?' not in str(item):
+                cmd.update({str(item): 0})
+            else:
+                cmd.update({str(item): 1})
+    for item in data[2]:
+        if str(item) is not None:
+            cmd.update({str(item): 1})
+    return cmd
 
 
 def model_content(connect_model):
     if 'AWG' in connect_model:
         result = query_csv_awg()
-    #elif 'AFG'in connect_model:
-    #    result = query_csv_afg()
-    #elif 'MDO'in connect_model:
-    #    result = query_csv_mdo()
-    #elif 'MSO' in connect_model or 'DPO' in connect_model or 'DSA' in connect_model:
-    #    result = query_csv_mdd()
+    elif 'DPO'in connect_model:
+        result = query_csv_dpo()
     else:
         result = None
     return result
 
 
 def get_data(model, device):
-    # Searching through the Doc
-    # Result shows in a dictionary structure
     result = model_content(device)
-    icon_address = ['..\..\Src\Img\A.png', '..\..\Src\Img\E.png']
+    icon_address = ['..\..\Src\Img\A.png', '..\..\Src\Img\O.png']
     index = 0;
     for cmd, value in result.items():
         item = QStandardItem(cmd)
@@ -100,7 +98,7 @@ class DocQuery(QDialog):
         if 'AWG' in self.device:
             data = pd.read_csv("..\..\Src\Lib\AWG.csv", encoding="ISO-8859-1", header=None)
         # print format
-        query_info = data[data[1].str.contains(key)==True]
+        query_info = data[data[1].str.contains(key) is True]
         Group = []
         Syntax = []
         Query = []
