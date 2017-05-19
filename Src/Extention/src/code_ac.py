@@ -97,6 +97,10 @@ class DocQuery(QDialog):
         # for row in reader:
         if 'AWG' in self.device:
             data = pd.read_csv("..\..\Src\Lib\AWG.csv", encoding="ISO-8859-1", header=None)
+        elif 'DPO' in self.device:
+            data = pd.read_csv("..\..\Src\Lib\DPO.csv", encoding="ISO-8859-1", header=None)
+        else:
+            data = pd.read_csv("..\..\Src\Lib\AWG.csv", encoding="ISO-8859-1", header=None)
         # print format
         query_info = data[data[1].str.contains(key) is True]
         Group = []
