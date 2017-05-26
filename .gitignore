@@ -1,0 +1,8 @@
+*.pyc
+*.xml
+.coverage
+
+.idea/**
+!.idea/inspectionProfiles/
+!.idea/inspectionProfiles/Python.xml
+!.idea/inspectionProfiles/profiles_settings.xml
