@@ -43,12 +43,13 @@ class Window(QMainWindow):
         self.listCommand = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
         self.commandSign = 0
         self.currPos = 0
+        self.commands_from_files = []
         ###
         self.file_io = QFileDialog()
         self.connected_device = None
         self.extention = None
         self.query_window = None
-        self.commands_from_files = []
+        self.communication = None
 
     def init_main(self):
         self.setGeometry(100, 100, 800, 600)
@@ -126,12 +127,15 @@ class Window(QMainWindow):
         #
         self.show()
 
-    def idn_connected_device(self):
+    def set_communication(self):
+        self.communication = CommunicationInterface()
+
+    def set_current_device(self, ip_address = None):
         try:
-            temp_com = CommunicationInterface()
-            self.connected_device = temp_com.device_identification()
+            self.connected_device = self.communication.set_current_device(ip_address)
         except:
             self.connected_device = "AWG1224"
+        print (self.connected_device)
         self.modelDisplay.setText(self.connected_device)
         print (self.connected_device)
 
@@ -211,7 +215,6 @@ class Window(QMainWindow):
             self.labelOutput.setText(currOutput)
             #print(query_result)
         except:
-            print('INTR Error: No device detected')
             currOutput = self.list[0] + '\n' + 'INTR Error: No device detected' + '\n'
             self.list[0] = currOutput
             self.labelOutput.setText(currOutput)
@@ -272,7 +275,9 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     VCT = Window()
     VCT.init_main()
-    VCT.idn_connected_device()
+    VCT.set_communication()
+    # Need an inner function call to set the current device
+    VCT.set_current_device()
     VCT.active_extention()
     sys.exit(app.exec_())
 
