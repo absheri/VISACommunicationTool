@@ -94,6 +94,8 @@ class DocQuery(QDialog):
 
     def doc_search(self):
         key = self.keyword_in.text()
+        group
+        query_only =
         # for row in reader:
         if 'AWG' in self.device:
             data = pd.read_csv("..\..\Src\Lib\AWG.csv", encoding="ISO-8859-1", header=None)
@@ -102,7 +104,7 @@ class DocQuery(QDialog):
         else:
             data = pd.read_csv("..\..\Src\Lib\AWG.csv", encoding="ISO-8859-1", header=None)
         # print format
-        query_info = data[data[1].str.contains(key) is True]
+        query_info = data[data[7].str.contains(key) == True & data[1] = ]
         Group = []
         Syntax = []
         Query = []

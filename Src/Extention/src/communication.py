@@ -7,6 +7,7 @@ class CommunicationInterface:
 
     def __init__(self, ):
         self.rm = visa.ResourceManager()
+        self.available_devices_LAN = ()
         self.my_instrument = None
         '''
          Get Connected Resource
@@ -15,7 +16,14 @@ class CommunicationInterface:
         '''
         self.resources = self.rm.list_resources()
 
+    def scan_local_net(self):
+        for resource in self.resources:
+            if 'TCPIP' in resource:
+                self.available_devices_LAN.append(resource)
+        return self.available_devices_LAN
+
     def set_current_device(self, ip_address = None):
+        # Assume IP connect with INSTR rather than SOCKET
         if not IP_address:
             self.my_instrument = self.rm.open_resource(self.resources[0])
         else:
