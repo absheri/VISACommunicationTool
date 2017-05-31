@@ -134,7 +134,7 @@ class Window(QMainWindow):
         try:
             self.connected_device = self.communication.set_current_device(ip_address)
         except:
-            self.connected_device = "AWG1224"
+            self.connected_device = "DPO1224"
         print (self.connected_device)
         self.modelDisplay.setText(self.connected_device)
         print (self.connected_device)
@@ -275,7 +275,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     VCT = Window()
     VCT.init_main()
-    VCT.set_communication()
+    #VCT.set_communication()
     # Need an inner function call to set the current device
     VCT.set_current_device()
     VCT.active_extention()
