@@ -50,11 +50,16 @@ def get_data(model, device):
     result = model_content(device)
     icon_address = ['..\..\Src\Img\A.png', '..\..\Src\Img\O.png']
     index = 0;
-    for cmd, value in result.items():
-        item = QStandardItem(cmd)
-        item.setIcon(QIcon(icon_address[value]))
-        model.insertRow(index, item)
-        index += 1
+    if result is not None:
+        for cmd, value in result.items():
+            item = QStandardItem(cmd)
+            item.setIcon(QIcon(icon_address[value]))
+            model.insertRow(index, item)
+            index += 1
+    else:
+        item = QStandardItem(" ")
+        item.setIcon(QIcon(icon_address[1]))
+        model.insertRow
 
 
 class CodeAC:
@@ -84,7 +89,7 @@ class DocQuery(QDialog):
         self.keyword_in = QLineEdit(self)
         self.search_button = QPushButton("Go", self)
         self.select_group = QComboBox(self)
-        self.select_group.addItems(['Acquisition', 'Act on Event', 'AFG', 'Alias','ARB', 'Bus','Calibration and Diagnostic','Configuration', 'Cursor', 'Display','DVM', 'Email', 'Ethernet', 'File System', 'Hard Copy', 'Histogram','Horizontal''Mark', 'Mask', 'Math', 'Measurement', 'Miscellaneous', 'PictBridge', 'Power','RF', 'Save and Recall', 'Search', 'Status and Error', 'Trigger', 'Vertical','Video Picture', 'Waveform Transfer', 'Zoom'])
+        self.select_group.addItems(['All','Acquisition', 'Act on Event', 'AFG', 'Alias','ARB', 'Bus','Calibration and Diagnostic','Configuration', 'Cursor', 'Display','DVM', 'Email', 'Ethernet', 'File System', 'Hard Copy', 'Histogram','Horizontal''Mark', 'Mask', 'Math', 'Measurement', 'Miscellaneous', 'PictBridge', 'Power','RF', 'Save and Recall', 'Search', 'Status and Error', 'Trigger', 'Vertical','Video Picture', 'Waveform Transfer', 'Zoom'])
         self.query_option = QCheckBox('Query Only',self)
         self.search_button.clicked.connect(self.doc_search)
         self.doc_display = QScrollArea(self)
@@ -112,7 +117,15 @@ class DocQuery(QDialog):
         if query_only is True:
             q_mark = '?'
         # print format
-        query_info = self.data[(self.data[7].str.contains(key) == True) & (self.data[0].str.contains(group) == True) & (self.data[2].str.contains(q_mark) == True)]
+
+        if group == 'All' and query_only:
+            query_info = self.data[(self.data[7].str.contains(key) == True) & (self.data[2].notnull())]
+        elif group == 'All' and query_only == False:
+            query_info = self.data[(self.data[7].str.contains(key) == True)]
+        elif group != 'All' and query_only:
+            query_info = self.data[(self.data[7].str.contains(key) == True) & (self.data[2].notnull()) & (self.data[0].str.contains(group) == True)]
+        else:
+            query_info = self.data[(self.data[7].str.contains(key) == True) & (self.data[0].str.contains(group) == True)]
         Group = []
         Syntax = []
         Query = []
