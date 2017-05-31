@@ -131,13 +131,12 @@ class Window(QMainWindow):
         self.communication = CommunicationInterface()
 
     def set_current_device(self, ip_address = None):
-        try:
+        # After entering IP address, the communication will set up
+        if ip_address:
             self.connected_device = self.communication.set_current_device(ip_address)
-        except:
-            self.connected_device = "DPO1224"
-        print (self.connected_device)
+        else:
+            self.connected_device = 'No Device'
         self.modelDisplay.setText(self.connected_device)
-        print (self.connected_device)
 
     def active_extention(self):
         self.extention = CodeAC(self.textInput, self.connected_device)
