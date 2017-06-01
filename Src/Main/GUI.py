@@ -28,7 +28,8 @@ class Window(QMainWindow):
         self.labelOutput = QLabel(self)
         self.main_widget = QWidget(self)
         self.scrollArea = QScrollArea(self.main_widget)
-        self.main_widget.setGeometry(25, 75, 775, 325)
+        self.main_widget.setGeometry(25, 100, 775, 325)
+        self.main_widget.setStyleSheet("background-color: lightgray")
         self.scrollArea.setWidget(self.labelOutput)
         self.scrollArea.setWidgetResizable(True)
         self.layout = QVBoxLayout(self.main_widget)
@@ -36,6 +37,13 @@ class Window(QMainWindow):
         self.buttonWrite = QPushButton(self)
         self.buttonQuery = QPushButton(self)
         self.buttonHistory = QPushButton(self)
+        #
+        self.ipLabal1 = QLabel(self)
+        self.ipInput = QLineEdit(self)
+        self.combo = QComboBox(self)
+        self.combo.addItem("192.168.1.1")
+        self.buttonConnect = QPushButton(self)
+        #
         self.list = ['', '', '', '', '', '1']
         self.historysign = 0
         self.buttonUp = QPushButton(self)
@@ -46,13 +54,13 @@ class Window(QMainWindow):
         self.commands_from_files = []
         ###
         self.file_io = QFileDialog()
-        self.connected_device = None
+        self.connected_device = "No Device"
         self.extention = None
         self.query_window = None
         self.communication = None
 
     def init_main(self):
-        self.setGeometry(100, 100, 800, 600)
+        self.setGeometry(100, 100, 825, 600)
         self.setWindowTitle("Tektronix VISA Communicate Tool")
         self.setWindowIcon(QIcon('../Img/icon.png'))
         #
@@ -64,10 +72,10 @@ class Window(QMainWindow):
         editMenu = self.menu_bar.addMenu('&Edit')
         editMenu.addAction("...")
 
-        connectionMenu = self.menu_bar.addMenu('&Connection')
-        connectAction = QAction('&Connect', self)
-        connectAction.triggered.connect(self.ipConnectionD)
-        connectionMenu.addAction(connectAction)
+        #connectionMenu = self.menu_bar.addMenu('&Connection')
+        #connectAction = QAction('&Connect', self)
+        #connectAction.triggered.connect(self.ipConnectionD)
+        #connectionMenu.addAction(connectAction)
 
         settingMenu = self.menu_bar.addMenu('&Setting')
         settingMenu.addAction("...")
@@ -87,37 +95,48 @@ class Window(QMainWindow):
         #
         self.modelDisplay.setGeometry(270,32,500,25)
         #
-        self.textInput.move(25, 450)
+        self.ipLabal1.setText("IP:")
+        self.ipLabal1.move(25, 55)
+        self.ipInput.setGeometry(50, 60, 200, 25)
+        self.combo.move(350, 55)
+        self.buttonConnect.move(500, 55)
+        self.buttonConnect.setText("IP Connection")
+        self.buttonConnect.clicked.connect(self.set_current_device)
+        #
+        self.textInput.move(25, 480)
 
         self.labelOutput.setGeometry(25, 75, 200, 120)
         #
         self.buttonWrite.setText("Write")  # text
+        self.buttonWrite.setIcon(QIcon("../Img/Write Icon.png"))
         self.buttonWrite.clicked.connect(self.writeSendD)
-        self.buttonWrite.move(600, 450)
+        self.buttonWrite.setGeometry(560, 460, 75, 75)
         self.buttonWrite.setObjectName("ButtonWrite")
         self.buttonWrite.setShortcut('Ctrl+W')  # shortcut key
         #
         self.buttonQuery.setText("Query")  # text
+        self.buttonQuery.setIcon(QIcon("../Img/Query Icon.png"))
         self.buttonQuery.clicked.connect(self.querySendD)
-        self.buttonQuery.move(600, 480)
+        self.buttonQuery.setGeometry(640, 460, 75, 75)
         self.buttonQuery.setObjectName("ButtonQuery")
         self.buttonQuery.setShortcut('Ctrl+Q')  # shortcut key
         #
         self.buttonHistory.setText("History")  # text
+        self.buttonHistory.setIcon(QIcon("../Img/History Icon.png"))
         self.buttonHistory.clicked.connect(self.active_history)
-        self.buttonHistory.move(700, 465)
+        self.buttonHistory.setGeometry(720, 460, 75, 75)
         self.buttonHistory.setObjectName("ButtonHistory")
         self.buttonHistory.setShortcut('Ctrl+H')  # shortcut key
         #
         self.buttonUp.setText("↑")  # text
         self.buttonUp.clicked.connect(self.commandPrevD)
-        self.buttonUp.setGeometry(530, 440, 25, 25)
+        self.buttonUp.setGeometry(530, 470, 25, 25)
         self.buttonUp.setObjectName("Prev Command")
         self.buttonUp.setShortcut('Ctrl+Z')  # shortcut key
        #
         self.buttonDown.setText("↓")  # text
         self.buttonDown.clicked.connect(self.commandNextD)
-        self.buttonDown.setGeometry(530, 470, 25, 25)
+        self.buttonDown.setGeometry(530, 500, 25, 25)
         self.buttonDown.setObjectName("Next Command")
         self.buttonDown.setShortcut('Ctrl+SHIFT+Z')  # shortcut key
         #can't use as no prev command
@@ -128,14 +147,22 @@ class Window(QMainWindow):
         self.show()
 
     def set_communication(self):
-        self.communication = CommunicationInterface()
+        try:
+            self.communication = CommunicationInterface()
+        except:
+            print('No NI-VISA')
 
-    def set_current_device(self, ip_address = None):
+    def set_current_device(self):
+        try:
+            ip_address = self.ipInput.text()
+        except:
+            ip_address = None
         # After entering IP address, the communication will set up
-        if ip_address:
-            self.connected_device = self.communication.set_current_device(ip_address)
-        else:
-            self.connected_device = 'No Device'
+        if ip_address is not None:
+            try:
+                self.connected_device = self.communication.set_current_device(ip_address)
+            except:
+                print('communication initial error')
         self.modelDisplay.setText(self.connected_device)
 
     def active_extention(self):
@@ -143,6 +170,7 @@ class Window(QMainWindow):
         self.extention.active_script()
 
     def active_query(self):
+        print(self.connected_device)
         self.query_window = DocQuery(self, self.connected_device)
         self.query_window.setGeometry(100, 200, 400, 400)
         self.query_window.show()
@@ -165,8 +193,8 @@ class Window(QMainWindow):
         self.labelOutput.setText(currOutput)
         #
         try:
-            communication_driver = CommunicationInterface()
-            send_command = communication_driver.write_to_device(currInput)
+
+            send_command = self.communication.write_to_device(currInput)
         except:
             print('INTR Error: No device detected')
 
@@ -204,11 +232,7 @@ class Window(QMainWindow):
         #self.labelOutput.adjustSize()
         #
         try:
-            communication_driver = CommunicationInterface()
-            '''
-                query --> result queried from device
-            '''
-            query_result = communication_driver.query_from_device(currInput)
+            query_result = self.communication.query_from_device(currInput)
             currOutput = self.list[0] + '\n' + query_result
             self.list[0] = currOutput
             self.labelOutput.setText(currOutput)
@@ -273,10 +297,9 @@ class Window(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     VCT = Window()
+    #VCT.setWindowFlags(QtCore.Qt.WindowMinimizeButtonHint)
     VCT.init_main()
     #VCT.set_communication()
     # Need an inner function call to set the current device
-    VCT.set_current_device()
-    VCT.active_extention()
     sys.exit(app.exec_())
 
