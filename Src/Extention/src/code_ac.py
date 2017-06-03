@@ -1,6 +1,10 @@
 import pandas as pd
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+<<<<<<< HEAD
+=======
+from PyQt5.QtCore import *
+>>>>>>> 77070586f8121a9a70f01eec5e98616f36649c12
 
 
 def query_csv_awg():
@@ -49,11 +53,24 @@ def get_data(model, device):
     result = model_content(device)
     icon_address = ['..\..\Src\Img\A.png', '..\..\Src\Img\O.png']
     index = 0;
+<<<<<<< HEAD
     for cmd, value in result.items():
         item = QStandardItem(cmd)
         item.setIcon(QIcon(icon_address[value]))
         model.insertRow(index, item)
         index += 1
+=======
+    if result is not None:
+        for cmd, value in result.items():
+            item = QStandardItem(cmd)
+            item.setIcon(QIcon(icon_address[value]))
+            model.insertRow(index, item)
+            index += 1
+    else:
+        item = QStandardItem(" ")
+        item.setIcon(QIcon(icon_address[1]))
+        model.insertRow
+>>>>>>> 77070586f8121a9a70f01eec5e98616f36649c12
 
 
 class CodeAC:
@@ -82,11 +99,18 @@ class DocQuery(QDialog):
         self.device = device
         self.keyword_in = QLineEdit(self)
         self.search_button = QPushButton("Go", self)
+<<<<<<< HEAD
+=======
+        self.select_group = QComboBox(self)
+        self.select_group.addItems(['All','Acquisition', 'Act on Event', 'AFG', 'Alias','ARB', 'Bus','Calibration and Diagnostic','Configuration', 'Cursor', 'Display','DVM', 'Email', 'Ethernet', 'File System', 'Hard Copy', 'Histogram','Horizontal''Mark', 'Mask', 'Math', 'Measurement', 'Miscellaneous', 'PictBridge', 'Power','RF', 'Save and Recall', 'Search', 'Status and Error', 'Trigger', 'Vertical','Video Picture', 'Waveform Transfer', 'Zoom'])
+        self.query_option = QCheckBox('Query Only',self)
+>>>>>>> 77070586f8121a9a70f01eec5e98616f36649c12
         self.search_button.clicked.connect(self.doc_search)
         self.doc_display = QScrollArea(self)
         self.doc_display.setStyleSheet("background-color: lightgray")
         self.grid_layout = QGridLayout(self)
         self.grid_layout.setSpacing(20)
+<<<<<<< HEAD
         self.grid_layout.addWidget(self.keyword_in, 1, 0)
         self.grid_layout.addWidget(self.search_button, 1, 1)
         self.grid_layout.addWidget(self.doc_display, 2,0,4,0)
@@ -103,6 +127,38 @@ class DocQuery(QDialog):
             data = pd.read_csv("..\..\Src\Lib\AWG.csv", encoding="ISO-8859-1", header=None)
         # print format
         query_info = data[data[1].str.contains(key) is True]
+=======
+        self.grid_layout.addWidget(self.keyword_in, 2, 0)
+        self.grid_layout.addWidget(self.search_button, 2, 1)
+        self.grid_layout.addWidget(self.select_group, 1, 0)
+        self.grid_layout.addWidget(self.query_option, 1, 1)
+        self.grid_layout.addWidget(self.doc_display, 3, 0, 5, 0)
+        self.setWindowTitle("Search Documentation")
+        if 'AWG' in self.device:
+            self.data = pd.read_csv("..\..\Src\Lib\AWG.csv", encoding="ISO-8859-1", header=None)
+        elif 'DPO' in self.device:
+            self.data = pd.read_csv("..\..\Src\Lib\DPO.csv", encoding="ISO-8859-1", header=None)
+        else:
+            self.data = pd.read_csv("..\..\Src\Lib\DPO.csv", encoding="ISO-8859-1", header=None)
+
+    def doc_search(self):
+        key = self.keyword_in.text()
+        group = str(self.select_group.currentText())
+        query_only = self.query_option.isChecked()
+        q_mark = None
+        if query_only is True:
+            q_mark = '?'
+        # print format
+
+        if group == 'All' and query_only:
+            query_info = self.data[(self.data[7].str.contains(key) == True) & (self.data[2].notnull())]
+        elif group == 'All' and query_only == False:
+            query_info = self.data[(self.data[7].str.contains(key) == True)]
+        elif group != 'All' and query_only:
+            query_info = self.data[(self.data[7].str.contains(key) == True) & (self.data[2].notnull()) & (self.data[0].str.contains(group) == True)]
+        else:
+            query_info = self.data[(self.data[7].str.contains(key) == True) & (self.data[0].str.contains(group) == True)]
+>>>>>>> 77070586f8121a9a70f01eec5e98616f36649c12
         Group = []
         Syntax = []
         Query = []
