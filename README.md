@@ -28,3 +28,17 @@ Run our project from terminal.
 ```
 >> python GUI.py
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
